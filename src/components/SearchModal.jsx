@@ -27,37 +27,34 @@ export default function SearchModal({ isOpen, onClose, onOpenAdmissions, onOpenF
       );
 
   return (
-    <div style={modalBackdropStyle}>
-      <div className="glass-card" style={{
+    <div className="modal-backdrop">
+      <div className="modal-panel" style={{
         maxWidth: '600px',
         width: '100%',
-        background: 'var(--bg-card)',
-        padding: '1.75rem',
-        borderRadius: '24px',
-        position: 'relative'
+        padding: '1.75rem'
       }}>
         {/* Close Button */}
-        <button onClick={onClose} style={closeBtnStyle}>
-          <X size={20} />
+        <button className="modal-close" onClick={onClose}>
+          <X size={18} />
         </button>
 
         {/* Search Bar Input */}
         <div style={{ position: 'relative', marginBottom: '1.5rem' }}>
-          <Search size={22} color="var(--royal-blue)" style={{ position: 'absolute', left: '14px', top: '14px' }} />
+          <Search size={20} color="var(--royal)" style={{ position: 'absolute', left: '14px', top: '14px' }} />
           <input 
             type="text"
             autoFocus 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search admissions, fees, syllabus, STEM labs, transport..."
+            placeholder="Search admissions, fees, syllabus, STEM labs, transport... (Ctrl+K)"
             style={{
               width: '100%',
               padding: '0.85rem 1rem 0.85rem 3rem',
-              borderRadius: '16px',
-              border: '2px solid var(--royal-blue)',
+              borderRadius: 'var(--r-md)',
+              border: '2px solid var(--royal)',
               background: 'var(--bg-subtle)',
-              color: 'var(--text-dark)',
-              fontSize: '1rem',
+              color: 'var(--text-heading)',
+              fontSize: '0.95rem',
               outline: 'none'
             }}
           />
@@ -85,19 +82,19 @@ export default function SearchModal({ isOpen, onClose, onOpenAdmissions, onOpenF
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '0.75rem 1rem',
-                    borderRadius: '12px',
+                    borderRadius: 'var(--r-md)',
                     background: 'var(--bg-subtle)',
-                    border: '1px solid var(--border-light)',
+                    border: '1px solid var(--border)',
                     textDecoration: 'none',
-                    color: 'var(--text-dark)',
-                    transition: 'var(--transition-fast)'
+                    color: 'var(--text-heading)',
+                    transition: 'var(--ease-fast)'
                   }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                    <BookOpen size={16} color="var(--royal-blue)" />
+                    <BookOpen size={16} color="var(--royal)" />
                     <span style={{ fontSize: '0.9rem', fontWeight: '600' }}>{item.title}</span>
                   </div>
-                  <span className="badge-blue" style={{ fontSize: '0.7rem' }}>{item.category}</span>
+                  <span className="badge badge-royal" style={{ fontSize: '0.7rem' }}>{item.category}</span>
                 </a>
               ))
             ) : (
@@ -112,34 +109,3 @@ export default function SearchModal({ isOpen, onClose, onOpenAdmissions, onOpenF
     </div>
   );
 }
-
-const modalBackdropStyle = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%',
-  background: 'rgba(0, 0, 0, 0.75)',
-  backdropFilter: 'blur(8px)',
-  zIndex: 2500,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '1rem'
-};
-
-const closeBtnStyle = {
-  position: 'absolute',
-  top: '16px',
-  right: '16px',
-  background: 'var(--bg-subtle)',
-  border: 'none',
-  borderRadius: '50%',
-  width: '36px',
-  height: '36px',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: 'var(--text-dark)'
-};

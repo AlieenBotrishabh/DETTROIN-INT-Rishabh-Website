@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   MapPin, Phone, Mail, Clock, Send, CheckCircle2, 
-  HelpCircle, ChevronDown, ChevronUp, Bus, Navigation 
+  HelpCircle, ChevronDown, ChevronUp, Navigation 
 } from 'lucide-react';
 
 const faqItems = [
@@ -44,50 +44,59 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" style={{ padding: '6rem 0', background: 'var(--bg-main)' }}>
-      <div className="container-custom">
+    <section id="contact" className="section-pad" style={{ background: 'var(--bg-page)' }}>
+      <div className="container">
         
         {/* Section Header */}
-        <div className="section-title-wrap">
-          <div className="section-subtitle">
-            <MapPin size={16} color="#1d4ed8" /> Get In Touch
+        <div className="section-header">
+          <div className="section-eyebrow">
+            <MapPin size={14} /> Get In Touch
           </div>
-          <h2 className="section-title">Contact Us & Visit Our Aligarh Campus</h2>
+          <h2 className="section-title">Contact Us & <span className="text-gradient">Visit Our Campus</span></h2>
           <p className="section-desc">
             Have questions about admissions, campus visits, or academic programs? We are here to help.
           </p>
+          <div className="divider" />
         </div>
 
         {/* Top Info Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={contactIconWrap('#1d4ed8')}><MapPin size={22} color="#fff" /></div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1.5rem', marginBottom: '4rem' }}>
+          <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div className="icon-wrap icon-wrap-md" style={{ background: 'var(--royal-muted)' }}>
+              <MapPin size={22} color="var(--royal)" />
+            </div>
             <div>
-              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>Campus Address</h4>
+              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-heading)' }}>Campus Address</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Krishna Nagar, G.T. Road, Aligarh, U.P. - 202001</p>
             </div>
           </div>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={contactIconWrap('#d97706')}><Phone size={22} color="#fff" /></div>
+          <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div className="icon-wrap icon-wrap-md" style={{ background: 'var(--gold-muted)' }}>
+              <Phone size={22} color="var(--gold-dark)" />
+            </div>
             <div>
-              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>Call Phone Desk</h4>
+              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-heading)' }}>Phone Desk</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>+91-9837050000 / +91-9837060000</p>
             </div>
           </div>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={contactIconWrap('#0d9488')}><Mail size={22} color="#fff" /></div>
+          <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div className="icon-wrap icon-wrap-md" style={{ background: 'rgba(13,148,136,0.1)' }}>
+              <Mail size={22} color="var(--teal)" />
+            </div>
             <div>
-              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>Email Desk</h4>
+              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-heading)' }}>Email Desk</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>info@kisaligarh.com / kisaligarh@gmail.com</p>
             </div>
           </div>
 
-          <div className="glass-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={contactIconWrap('#e11d48')}><Clock size={22} color="#fff" /></div>
+          <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div className="icon-wrap icon-wrap-md" style={{ background: 'rgba(225,29,72,0.1)' }}>
+              <Clock size={22} color="var(--crimson)" />
+            </div>
             <div>
-              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>Office Hours</h4>
+              <h4 style={{ fontSize: '0.95rem', color: 'var(--text-heading)' }}>Office Hours</h4>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Mon - Sat: 08:00 AM - 03:30 PM</p>
             </div>
           </div>
@@ -97,62 +106,62 @@ export default function ContactSection() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem' }}>
           
           {/* Contact Form */}
-          <div className="glass-card" style={{ padding: '2.5rem' }}>
-            <h3 style={{ fontSize: '1.4rem', color: 'var(--text-dark)', marginBottom: '1.5rem' }}>
+          <div className="card" style={{ padding: '2.5rem' }}>
+            <h3 style={{ fontSize: '1.4rem', color: 'var(--text-heading)', marginBottom: '1.5rem' }}>
               Send Us a Message
             </h3>
 
             {contactSubmitted && (
-              <div style={{ background: 'rgba(13, 148, 136, 0.15)', border: '1px solid #0d9488', color: '#0d9488', padding: '1rem', borderRadius: '12px', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ background: 'rgba(13, 148, 136, 0.15)', border: '1px solid var(--teal)', color: 'var(--teal)', padding: '1rem', borderRadius: 'var(--r-md)', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <CheckCircle2 size={20} /> Message sent successfully! Our team will respond shortly.
               </div>
             )}
 
             <form onSubmit={handleSubmit}>
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={labelStyle}>Your Full Name *</label>
+                <label className="form-label">Your Full Name *</label>
                 <input 
                   type="text" 
                   required 
+                  className="form-input"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Ramesh Kumar" 
-                  style={inputStyle} 
                 />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
                 <div>
-                  <label style={labelStyle}>Email Address *</label>
+                  <label className="form-label">Email Address *</label>
                   <input 
                     type="email" 
                     required 
+                    className="form-input"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="name@example.com" 
-                    style={inputStyle} 
                   />
                 </div>
 
                 <div>
-                  <label style={labelStyle}>Phone Number *</label>
+                  <label className="form-label">Phone Number *</label>
                   <input 
                     type="tel" 
                     required 
+                    className="form-input"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="+91 9876543210" 
-                    style={inputStyle} 
                   />
                 </div>
               </div>
 
               <div style={{ marginBottom: '1.25rem' }}>
-                <label style={labelStyle}>Subject</label>
+                <label className="form-label">Subject</label>
                 <select 
+                  className="form-select"
                   value={formData.subject}
                   onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                  style={inputStyle}
                 >
                   <option value="Admission Inquiry">Admission Inquiry</option>
                   <option value="Campus Tour Booking">Campus Tour Booking</option>
@@ -162,18 +171,18 @@ export default function ContactSection() {
               </div>
 
               <div style={{ marginBottom: '1.5rem' }}>
-                <label style={labelStyle}>Your Message *</label>
+                <label className="form-label">Your Message *</label>
                 <textarea 
                   rows="4" 
                   required 
+                  className="form-textarea"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="How can we assist you?" 
-                  style={{ ...inputStyle, resize: 'vertical' }}
                 />
               </div>
 
-              <button type="submit" className="btn-primary" style={{ width: '100%', padding: '0.85rem' }}>
+              <button type="submit" className="btn btn-primary btn-md" style={{ width: '100%' }}>
                 Send Message <Send size={16} />
               </button>
             </form>
@@ -182,13 +191,10 @@ export default function ContactSection() {
           {/* Map Simulator & FAQ Accordion */}
           <div>
             {/* Map Frame */}
-            <div style={{
-              borderRadius: '24px',
+            <div className="card" style={{
+              borderRadius: 'var(--r-xl)',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-md)',
-              marginBottom: '2rem',
-              border: '1px solid var(--border-light)',
-              background: 'var(--bg-card)'
+              marginBottom: '2rem'
             }}>
               <iframe 
                 title="Krishna International School Aligarh Location Map"
@@ -203,44 +209,23 @@ export default function ContactSection() {
 
             {/* FAQ Accordion */}
             <div>
-              <h3 style={{ fontSize: '1.3rem', color: 'var(--text-dark)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <HelpCircle size={20} color="var(--royal-blue)" /> Frequently Asked Questions
+              <h3 style={{ fontSize: '1.3rem', color: 'var(--text-heading)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <HelpCircle size={20} color="var(--royal)" /> Frequently Asked Questions
               </h3>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {faqItems.map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    style={{
-                      background: 'var(--bg-card)',
-                      border: '1px solid var(--border-light)',
-                      borderRadius: '14px',
-                      overflow: 'hidden'
-                    }}
-                  >
+                  <div key={idx} className={`faq-item ${openFaq === idx ? 'open' : ''}`}>
                     <button 
                       onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                      style={{
-                        width: '100%',
-                        padding: '1rem 1.25rem',
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        background: 'none',
-                        border: 'none',
-                        textAlign: 'left',
-                        fontWeight: '700',
-                        fontSize: '0.925rem',
-                        color: 'var(--text-dark)',
-                        cursor: 'pointer'
-                      }}
+                      className="faq-question"
                     >
                       {item.q}
-                      {openFaq === idx ? <ChevronUp size={18} color="var(--royal-blue)" /> : <ChevronDown size={18} />}
+                      {openFaq === idx ? <ChevronUp size={18} color="var(--royal)" /> : <ChevronDown size={18} />}
                     </button>
 
                     {openFaq === idx && (
-                      <div style={{ padding: '0 1.25rem 1rem 1.25rem', color: 'var(--text-muted)', fontSize: '0.875rem', lineHeight: 1.6 }}>
+                      <div className="faq-answer">
                         {item.a}
                       </div>
                     )}
@@ -257,33 +242,3 @@ export default function ContactSection() {
     </section>
   );
 }
-
-const contactIconWrap = (color) => ({
-  width: '46px',
-  height: '46px',
-  borderRadius: '12px',
-  background: color,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0
-});
-
-const labelStyle = {
-  display: 'block',
-  fontSize: '0.85rem',
-  fontWeight: '700',
-  color: 'var(--text-dark)',
-  marginBottom: '0.35rem'
-};
-
-const inputStyle = {
-  width: '100%',
-  padding: '0.7rem 0.9rem',
-  borderRadius: '12px',
-  border: '1px solid var(--border-light)',
-  background: 'var(--bg-subtle)',
-  color: 'var(--text-dark)',
-  fontSize: '0.9rem',
-  outline: 'none'
-};

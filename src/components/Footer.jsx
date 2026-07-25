@@ -8,13 +8,13 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
 
   return (
     <footer style={{
-      background: 'linear-gradient(180deg, #0b192c 0%, #070d17 100%)',
+      background: 'linear-gradient(180deg, var(--navy-950) 0%, #020710 100%)',
       color: '#cbd5e1',
       paddingTop: '5rem',
       paddingBottom: '2rem',
       borderTop: '1px solid rgba(255,255,255,0.08)'
     }}>
-      <div className="container-custom">
+      <div className="container">
         
         <div style={{
           display: 'grid',
@@ -26,21 +26,16 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
           {/* Col 1: Brand & Affiliation */}
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
-              <div style={{
-                width: '42px',
-                height: '42px',
-                background: 'linear-gradient(135deg, #1d4ed8, #2563eb)',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#f59e0b'
+              <div className="icon-wrap icon-wrap-md" style={{
+                background: 'var(--grad-royal)',
+                color: 'var(--gold)',
+                boxShadow: 'var(--shadow-royal)'
               }}>
                 <GraduationCap size={26} />
               </div>
               <div>
-                <div style={{ fontSize: '1.15rem', fontWeight: '800', color: '#ffffff' }}>
-                  KRISHNA <span style={{ color: '#60a5fa' }}>INTERNATIONAL</span>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.15rem', fontWeight: '800', color: '#ffffff' }}>
+                  KRISHNA <span style={{ color: '#60a5fa' }}>INTL.</span>
                 </div>
                 <div style={{ fontSize: '0.7rem', color: '#94a3b8', letterSpacing: '0.05em' }}>
                   School Aligarh • CBSE #2132415
@@ -52,7 +47,7 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
               Empowering students through academic rigor, futuristic AI/Robotics STEM labs, Olympic sports, and character education in Krishna Nagar, Aligarh.
             </p>
 
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(255,255,255,0.06)', padding: '0.4rem 0.85rem', borderRadius: '9999px', fontSize: '0.775rem', color: '#fbbf24', border: '1px solid rgba(245, 158, 11, 0.3)' }}>
+            <div className="badge badge-inverted">
               <ShieldCheck size={14} /> CBSE Affiliated Senior Secondary Institution
             </div>
           </div>
@@ -85,8 +80,8 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
           {/* Col 4: Dettroin Internship Assessment Info */}
           <div>
             <h4 style={{ fontSize: '1.05rem', color: '#ffffff', marginBottom: '1.25rem' }}>Dettroin Internship Challenge</h4>
-            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.25rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <div style={{ fontSize: '0.8rem', color: '#f59e0b', fontWeight: '700', textTransform: 'uppercase' }}>ROUND 1 SUBMISSION</div>
+            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.25rem', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,255,255,0.1)' }}>
+              <span className="badge badge-inverted" style={{ marginBottom: '0.4rem', fontSize: '0.7rem' }}>ROUND 1 SUBMISSION</span>
               <p style={{ fontSize: '0.825rem', color: '#cbd5e1', marginTop: '0.4rem', lineHeight: 1.5 }}>
                 Redesign assessment created for Dettroin Full Stack Developer Internship Program.
               </p>
@@ -117,19 +112,8 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
 
           <button 
             onClick={scrollToTop} 
-            style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: 'none',
-              color: '#fff',
-              padding: '0.5rem 1rem',
-              borderRadius: '9999px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.4rem',
-              fontSize: '0.8rem',
-              fontWeight: '600'
-            }}
+            className="btn btn-ghost-white btn-sm"
+            style={{ borderRadius: 'var(--r-full)' }}
           >
             Back to Top <ArrowUp size={14} />
           </button>

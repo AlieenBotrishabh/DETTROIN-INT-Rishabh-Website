@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { X, Calculator, Download, IndianRupee } from 'lucide-react';
+import { X, Calculator, Download, GraduationCap, Bus, Home, Clock } from 'lucide-react';
 
 const feeData = {
   kg: { name: 'Nursery / KG', tuition: 32000, lab: 2000, dev: 5000 },
@@ -43,35 +43,45 @@ export default function FeeCalculatorModal({ isOpen, onClose }) {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal-panel" style={{ maxWidth: '740px', width: '100%', padding: '2.5rem' }}>
-        <button className="modal-close" onClick={onClose}><X size={18} /></button>
+      <div className="modal-panel" style={{ maxWidth: '760px', width: '100%', padding: 0, overflow: 'hidden' }}>
+        <button className="modal-close" onClick={onClose} style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff' }}><X size={18} /></button>
 
-        <div style={{ marginBottom: '1.75rem' }}>
-          <span className="badge badge-royal"><Calculator size={13} /> Interactive Fee Estimator</span>
-          <h2 style={{ fontSize: '1.5rem', marginTop: '0.4rem', color: 'var(--text-heading)' }}>Dynamic Fee Structure Calculator</h2>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Transparent, itemized fee breakdown for Academic Year 2026-27</p>
+        {/* Header Banner */}
+        <div style={{ background: 'var(--grad-navy)', padding: '2.25rem 2.5rem 1.75rem', position: 'relative', overflow: 'hidden' }}>
+          <div className="glow-blob" style={{ width: 260, height: 260, top: -120, right: -80, background: 'var(--royal)', opacity: 0.18 }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 1 }}>
+            <div className="icon-wrap icon-wrap-lg" style={{ background: 'rgba(26,86,219,0.25)', border: '1px solid rgba(96,165,250,0.4)' }}>
+              <Calculator size={28} color="#60a5fa" />
+            </div>
+            <div>
+              <span className="badge badge-inverted" style={{ marginBottom: '0.4rem', background: 'rgba(96,165,250,0.18)', color: '#93c5fd', border: '1px solid rgba(96,165,250,0.35)' }}>Interactive Fee Estimator</span>
+              <h2 style={{ fontSize: '1.5rem', marginTop: '0.4rem', color: '#ffffff' }}>Dynamic Fee Structure Calculator</h2>
+              <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Transparent, itemized fee breakdown for Academic Year 2026-27</p>
+            </div>
+          </div>
         </div>
 
+        <div style={{ padding: '2rem 2.5rem 2.5rem' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '2rem' }}>
 
           {/* Controls */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
-              <label className="form-label">Grade Level</label>
+              <label className="form-label"><GraduationCap size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Grade Level</label>
               <select className="form-select" value={grade} onChange={e => setGrade(e.target.value)}>
                 {Object.keys(feeData).map(k => <option key={k} value={k}>{feeData[k].name}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="form-label">Transport Bus Zone</label>
+              <label className="form-label"><Bus size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Transport Bus Zone</label>
               <select className="form-select" value={zone} onChange={e => setZone(e.target.value)}>
                 {Object.keys(transportFees).map(k => <option key={k} value={k}>{transportFees[k].label}</option>)}
               </select>
             </div>
 
             <div>
-              <label className="form-label">Boarding Hostel</label>
+              <label className="form-label"><Home size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Boarding Hostel</label>
               <div onClick={() => setHostel(h => !h)} style={{
                 display: 'flex', alignItems: 'center', gap: '0.75rem',
                 background: hostel ? 'var(--royal-muted)' : 'var(--bg-subtle)',
@@ -94,7 +104,7 @@ export default function FeeCalculatorModal({ isOpen, onClose }) {
             </div>
 
             <div>
-              <label className="form-label">Payment Frequency</label>
+              <label className="form-label"><Clock size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Payment Frequency</label>
               <div style={{ display: 'flex', gap: '0.5rem' }}>
                 {['quarterly', 'biannual', 'annual'].map(f => (
                   <button key={f} onClick={() => setFreq(f)} style={{
@@ -150,6 +160,7 @@ export default function FeeCalculatorModal({ isOpen, onClose }) {
             </button>
           </div>
 
+        </div>
         </div>
       </div>
     </div>

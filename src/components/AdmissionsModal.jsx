@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle, ArrowRight, Upload, Sparkles, GraduationCap, Check } from 'lucide-react';
+import { X, CheckCircle, ArrowRight, Upload, Sparkles, GraduationCap, Check, User, Calendar, Users, Phone, Mail, MapPin, FileText } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const grades = ['Nursery / Playgroup', 'Kindergarten (LKG/UKG)', 'Primary (Grade 1–5)', 'Middle School (Grade 6–8)', 'Secondary (Grade 9–10)', 'Senior Secondary – Science', 'Senior Secondary – Commerce', 'Senior Secondary – Humanities'];
@@ -28,14 +28,25 @@ export default function AdmissionsModal({ isOpen, onClose }) {
 
   return (
     <div className="modal-backdrop">
-      <div className="modal-panel" style={{ maxWidth: '640px', width: '100%', padding: '2.5rem' }}>
-        <button className="modal-close" onClick={reset}><X size={18} /></button>
+      <div className="modal-panel" style={{ maxWidth: '660px', width: '100%', padding: 0, overflow: 'hidden' }}>
+        <button className="modal-close" onClick={reset} style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', color: '#fff' }}><X size={18} /></button>
 
-        <div style={{ marginBottom: '1.75rem' }}>
-          <span className="badge badge-gold"><Sparkles size={12} /> Digital Application 2026-27</span>
-          <h2 style={{ fontSize: '1.5rem', marginTop: '0.4rem', color: 'var(--text-heading)' }}>Admission Application Form</h2>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>Krishna International School Aligarh</p>
+        {/* Header Banner */}
+        <div style={{ background: 'var(--grad-navy)', padding: '2.25rem 2.5rem 1.75rem', position: 'relative', overflow: 'hidden' }}>
+          <div className="glow-blob" style={{ width: 260, height: 260, top: -120, right: -80, background: 'var(--gold)', opacity: 0.16 }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 1 }}>
+            <div className="icon-wrap icon-wrap-lg" style={{ background: 'rgba(245,158,11,0.18)', border: '1px solid rgba(245,158,11,0.35)' }}>
+              <GraduationCap size={28} color="var(--gold)" />
+            </div>
+            <div>
+              <span className="badge badge-inverted" style={{ marginBottom: '0.4rem' }}><Sparkles size={12} /> Digital Application 2026-27</span>
+              <h2 style={{ fontSize: '1.5rem', marginTop: '0.4rem', color: '#ffffff' }}>Admission Application Form</h2>
+              <p style={{ fontSize: '0.85rem', color: '#94a3b8', marginTop: '0.15rem' }}>Krishna International School Aligarh</p>
+            </div>
+          </div>
         </div>
+
+        <div style={{ padding: '2rem 2.5rem 2.5rem' }}>
 
         {/* Step Indicators */}
         {step < 4 && (
@@ -46,19 +57,22 @@ export default function AdmissionsModal({ isOpen, onClose }) {
               const active = step === n;
               return (
                 <React.Fragment key={n}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
                     <div style={{
-                      width: '28px', height: '28px', borderRadius: '50%',
+                      width: '34px', height: '34px', borderRadius: '50%',
                       background: done ? 'var(--emerald)' : active ? 'var(--royal)' : 'var(--bg-muted)',
                       color: done || active ? '#fff' : 'var(--text-muted)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.8rem', fontWeight: '700', flexShrink: 0, transition: 'var(--ease-normal)'
+                      fontSize: '0.85rem', fontWeight: '700', flexShrink: 0, transition: 'var(--ease-normal)',
+                      boxShadow: active ? 'var(--shadow-royal)' : done ? 'var(--shadow-teal)' : 'none',
                     }}>
-                      {done ? <Check size={14} /> : n}
+                      {done ? <Check size={16} /> : n}
                     </div>
-                    <span style={{ fontSize: '0.78rem', fontWeight: '600', color: active ? 'var(--royal)' : 'var(--text-muted)', whiteSpace: 'nowrap' }}>{label}</span>
+                    <span className="hide-mobile" style={{ fontSize: '0.78rem', fontWeight: '600', color: active ? 'var(--royal)' : 'var(--text-muted)', whiteSpace: 'nowrap' }}>{label}</span>
                   </div>
-                  {i < 2 && <div style={{ flex: 1, height: '2px', background: done ? 'var(--emerald)' : 'var(--border)', borderRadius: '1px', transition: 'var(--ease-normal)' }} />}
+                  {i < 2 && <div style={{ flex: 1, height: '3px', borderRadius: '2px', background: 'var(--border)', overflow: 'hidden' }}>
+                    <div style={{ height: '100%', width: done ? '100%' : '0%', background: 'var(--emerald)', transition: 'width 0.4s ease' }} />
+                  </div>}
                 </React.Fragment>
               );
             })}
@@ -70,11 +84,11 @@ export default function AdmissionsModal({ isOpen, onClose }) {
           <form onSubmit={e => { e.preventDefault(); setStep(2); }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <label className="form-label">Student Full Name *</label>
+                <label className="form-label"><User size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Student Full Name *</label>
                 <input className="form-input" type="text" required value={data.studentName} onChange={e => set('studentName', e.target.value)} placeholder="e.g. Aarav Sharma" />
               </div>
               <div>
-                <label className="form-label">Date of Birth *</label>
+                <label className="form-label"><Calendar size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Date of Birth *</label>
                 <input className="form-input" type="date" required value={data.dob} onChange={e => set('dob', e.target.value)} />
               </div>
             </div>
@@ -86,7 +100,7 @@ export default function AdmissionsModal({ isOpen, onClose }) {
                 </select>
               </div>
               <div>
-                <label className="form-label">Grade Applying For *</label>
+                <label className="form-label"><GraduationCap size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Grade Applying For *</label>
                 <select className="form-select" value={data.grade} onChange={e => set('grade', e.target.value)}>
                   {grades.map(g => <option key={g}>{g}</option>)}
                 </select>
@@ -103,20 +117,20 @@ export default function AdmissionsModal({ isOpen, onClose }) {
           <form onSubmit={e => { e.preventDefault(); setStep(3); }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
               <div>
-                <label className="form-label">Parent/Guardian Name *</label>
+                <label className="form-label"><Users size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Parent/Guardian Name *</label>
                 <input className="form-input" type="text" required value={data.parentName} onChange={e => set('parentName', e.target.value)} placeholder="e.g. Rajesh Sharma" />
               </div>
               <div>
-                <label className="form-label">Mobile Number *</label>
+                <label className="form-label"><Phone size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Mobile Number *</label>
                 <input className="form-input" type="tel" required value={data.phone} onChange={e => set('phone', e.target.value)} placeholder="+91 9876543210" />
               </div>
             </div>
             <div style={{ marginBottom: '1rem' }}>
-              <label className="form-label">Email Address *</label>
+              <label className="form-label"><Mail size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Email Address *</label>
               <input className="form-input" type="email" required value={data.email} onChange={e => set('email', e.target.value)} placeholder="parent@example.com" />
             </div>
             <div style={{ marginBottom: '1.5rem' }}>
-              <label className="form-label">Residential Address *</label>
+              <label className="form-label"><MapPin size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Residential Address *</label>
               <input className="form-input" type="text" required value={data.address} onChange={e => set('address', e.target.value)} placeholder="House No., Colony, City" />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -130,7 +144,7 @@ export default function AdmissionsModal({ isOpen, onClose }) {
         {step === 3 && (
           <form onSubmit={handleSubmit}>
             <div style={{ marginBottom: '1rem' }}>
-              <label className="form-label">Previous School (If Any)</label>
+              <label className="form-label"><FileText size={13} style={{ verticalAlign: '-2px', marginRight: '4px' }} />Previous School (If Any)</label>
               <input className="form-input" type="text" value={data.prevSchool} onChange={e => set('prevSchool', e.target.value)} placeholder="e.g. DPS Aligarh" />
             </div>
 
@@ -141,7 +155,9 @@ export default function AdmissionsModal({ isOpen, onClose }) {
             </div>
 
             <div style={{ background: 'var(--gold-muted)', border: '1px solid rgba(245,158,11,0.3)', borderRadius: 'var(--r-md)', padding: '1rem', marginBottom: '1.5rem' }}>
-              <div style={{ fontSize: '0.825rem', fontWeight: '700', color: 'var(--text-heading)', marginBottom: '0.3rem' }}>📋 Summary</div>
+              <div style={{ fontSize: '0.825rem', fontWeight: '700', color: 'var(--text-heading)', marginBottom: '0.3rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Check size={15} color="var(--royal)" /> Summary
+              </div>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                 Grade: <strong>{data.grade}</strong> · Student: <strong>{data.studentName || '—'}</strong> · Parent: <strong>{data.parentName || '—'}</strong> · Phone: <strong>{data.phone || '—'}</strong>
               </div>
@@ -149,7 +165,7 @@ export default function AdmissionsModal({ isOpen, onClose }) {
 
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <button type="button" className="btn btn-outline btn-md" onClick={() => setStep(2)}>Back</button>
-              <button type="submit" className="btn btn-gold btn-md">Submit Application 🎉</button>
+              <button type="submit" className="btn btn-gold btn-md">Submit Application <Sparkles size={16} /></button>
             </div>
           </form>
         )}
@@ -160,7 +176,7 @@ export default function AdmissionsModal({ isOpen, onClose }) {
             <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, var(--teal), var(--emerald))', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.25rem', boxShadow: 'var(--shadow-teal)' }}>
               <CheckCircle size={38} />
             </div>
-            <h3 style={{ fontSize: '1.65rem', color: 'var(--text-heading)', marginBottom: '0.5rem' }}>Application Submitted! 🎊</h3>
+            <h3 style={{ fontSize: '1.65rem', color: 'var(--text-heading)', marginBottom: '0.5rem' }}>Application Submitted!</h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', marginBottom: '1.75rem', lineHeight: 1.6 }}>
               Our admissions team will contact you at <strong>{data.phone || '+91-XXXXXXXXXX'}</strong> within <strong>24 working hours</strong>.
             </p>
@@ -171,6 +187,7 @@ export default function AdmissionsModal({ isOpen, onClose }) {
             <button onClick={reset} className="btn btn-primary btn-md">Close & Return to Website</button>
           </div>
         )}
+        </div>
       </div>
     </div>
   );

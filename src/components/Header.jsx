@@ -1,308 +1,243 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Phone, Mail, Search, Moon, Sun, ChevronDown, Menu, X, 
-  UserCheck, Award, Sparkles, BookOpen, GraduationCap, ArrowRight, Type 
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  GraduationCap, Phone, Mail, Search, Moon, Sun, Menu, X,
+  ChevronDown, UserCheck, Type, ArrowRight, Sparkles, Bell
 } from 'lucide-react';
 
-export default function Header({ 
-  theme, 
-  setTheme, 
-  fontScale, 
-  setFontScale, 
-  onOpenAdmissions, 
-  onOpenFeeCalculator, 
-  onOpenPortalLogin, 
-  onOpenSearch 
-}) {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+const navLinks = [
+  { label: 'About', href: '#about' },
+  {
+    label: 'Academics', href: '#academics',
+    children: [
+      { label: 'CBSE Curriculum', href: '#academics' },
+      { label: 'STEM & AI Labs', href: '#academics' },
+      { label: 'Senior Streams', href: '#academics' },
+    ]
+  },
+  { label: 'Facilities', href: '#facilities' },
+  {
+    label: 'Admissions', href: '#admissions',
+    children: [
+      { label: 'Admission Process', href: '#admissions' },
+      { label: 'Fee Calculator', action: 'fee' },
+      { label: '📝 Apply Online', action: 'apply', highlight: true },
+    ]
+  },
+  { label: 'Gallery', href: '#gallery' },
+  { label: 'Events & News', href: '#events' },
+  { label: 'Contact', href: '#contact' },
+];
+
+export default function Header({ theme, setTheme, fontScale, setFontScale, onOpenAdmissions, onOpenFeeCalculator, onOpenPortalLogin, onOpenSearch }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [noticeIdx, setNoticeIdx] = useState(0);
+  const closeTimer = useRef(null);
+
+  const notices = [
+    '🎓 Admissions Open 2026-27 for Nursery to Grade XII — Register Now!',
+    '🏆 KIS Student wins Gold at State Robotics Olympiad 2026',
+    '📅 Periodic Assessment Test-1 Schedule Released — Check Notice Board',
+    '🚌 Revised AC Bus Routes for July 2026 — Download Circular PDF',
+  ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', onScroll);
+    const cycle = setInterval(() => setNoticeIdx(p => (p + 1) % notices.length), 4000);
+    return () => { window.removeEventListener('scroll', onScroll); clearInterval(cycle); };
   }, []);
 
-  const toggleDropdown = (name) => {
-    setActiveDropdown(activeDropdown === name ? null : name);
+  const openDropdown = (label) => {
+    clearTimeout(closeTimer.current);
+    setActiveDropdown(label);
+  };
+  const scheduleClose = () => {
+    closeTimer.current = setTimeout(() => setActiveDropdown(null), 200);
   };
 
-  const increaseFont = () => setFontScale(prev => Math.min(prev + 10, 120));
-  const resetFont = () => setFontScale(100);
-  const decreaseFont = () => setFontScale(prev => Math.max(prev - 10, 90));
+  const handleChildAction = (action) => {
+    setActiveDropdown(null);
+    if (action === 'fee') onOpenFeeCalculator();
+    if (action === 'apply') onOpenAdmissions();
+  };
 
   return (
-    <header className="header-wrapper" style={{ position: 'sticky', top: 0, zIndex: 1000 }}>
-      {/* Top Announcement Bar */}
-      <div style={{
-        background: 'linear-gradient(90deg, #0b192c 0%, #1e293b 50%, #0f172a 100%)',
-        color: '#f8fafc',
-        padding: '0.4rem 0',
-        fontSize: '0.825rem',
-        borderBottom: '1px solid rgba(255,255,255,0.08)'
-      }}>
-        <div className="container-custom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-          {/* Ticker marquee / highlight */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+    <header style={{ position: 'sticky', top: 0, zIndex: 'var(--z-header)' }}>
+      {/* ── Top Notice Bar ── */}
+      <div className="notif-bar">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', minWidth: 0 }}>
             <span style={{
-              background: '#f59e0b',
-              color: '#0b192c',
-              fontWeight: '800',
-              padding: '0.15rem 0.6rem',
-              borderRadius: '4px',
-              fontSize: '0.725rem',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em'
+              background: 'var(--gold)', color: 'var(--navy-900)',
+              fontWeight: '800', padding: '0.12rem 0.55rem', borderRadius: '4px',
+              fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0
             }}>
-              NOTICE
+              LIVE
             </span>
-            <span style={{ opacity: 0.95 }}>
-              🎯 <strong>Admissions Open 2026-27</strong> | Nursery to Grade XII | Entrance Test & Counseling Schedule
+            <span style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', opacity: 0.95, fontSize: '0.82rem' }}>
+              {notices[noticeIdx]}
             </span>
           </div>
 
-          {/* Quick Contact & Controls */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div className="hide-mobile" style={{ display: 'flex', gap: '1rem' }}>
-              <a href="tel:+919837050000" style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <Phone size={13} color="#f59e0b" /> +91-9837050000
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
+            <div className="hide-mobile" style={{ display: 'flex', gap: '1.25rem' }}>
+              <a href="tel:+919837050000" style={{ color: '#cbd5e1', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Phone size={12} color="var(--gold)" /> +91-9837050000
               </a>
-              <a href="mailto:info@kisaligarh.com" style={{ color: '#cbd5e1', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
-                <Mail size={13} color="#f59e0b" /> info@kisaligarh.com
+              <a href="mailto:info@kisaligarh.com" style={{ color: '#cbd5e1', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                <Mail size={12} color="var(--gold)" /> info@kisaligarh.com
               </a>
             </div>
 
-            {/* Accessibility & Theme Adjusters */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'rgba(255,255,255,0.1)', padding: '0.15rem 0.5rem', borderRadius: '20px' }}>
-              <span style={{ fontSize: '0.7rem', color: '#94a3b8', marginRight: '2px', display: 'flex', alignItems: 'center', gap: '2px' }}>
-                <Type size={11} /> Size:
-              </span>
-              <button onClick={decreaseFont} title="Decrease Font Size" style={fontBtnStyle(fontScale === 90)}>A-</button>
-              <button onClick={resetFont} title="Reset Font Size" style={fontBtnStyle(fontScale === 100)}>A</button>
-              <button onClick={increaseFont} title="Increase Font Size" style={fontBtnStyle(fontScale === 120)}>A+</button>
+            {/* Font Size Controls */}
+            <div style={{ display: 'flex', gap: '2px', background: 'rgba(255,255,255,0.08)', padding: '3px 6px', borderRadius: '8px' }}>
+              <button onClick={() => setFontScale(p => Math.max(p - 10, 90))} style={fontBtn(false)}>A-</button>
+              <button onClick={() => setFontScale(100)} style={fontBtn(fontScale === 100)}>A</button>
+              <button onClick={() => setFontScale(p => Math.min(p + 10, 120))} style={fontBtn(false)}>A+</button>
             </div>
 
-            {/* Light / Dark Mode Toggle */}
-            <button 
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} 
-              style={{
-                background: 'rgba(255,255,255,0.12)',
-                border: 'none',
-                color: '#fff',
-                width: '28px',
-                height: '28px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all 0.2s ease'
-              }}
-              title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
-            >
-              {theme === 'light' ? <Moon size={14} color="#fbbf24" /> : <Sun size={14} color="#f59e0b" />}
+            {/* Theme Toggle */}
+            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+              style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '28px', height: '28px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {theme === 'light' ? <Moon size={13} color="#fbbf24" /> : <Sun size={13} color="#fbbf24" />}
             </button>
 
-            {/* Parent & Student Portal Link */}
-            <button
-              onClick={onOpenPortalLogin}
-              style={{
-                background: 'rgba(29, 78, 216, 0.3)',
-                border: '1px solid rgba(29, 78, 216, 0.6)',
-                color: '#60a5fa',
-                padding: '0.2rem 0.6rem',
-                borderRadius: '4px',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.3rem'
-              }}
-            >
-              <UserCheck size={12} /> Student/Parent Portal
+            {/* Portal Button */}
+            <button onClick={onOpenPortalLogin} style={{
+              background: 'rgba(26,86,219,0.4)', border: '1px solid rgba(26,86,219,0.6)',
+              color: '#93c5fd', padding: '0.2rem 0.65rem', borderRadius: '6px',
+              fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', gap: '0.3rem'
+            }}>
+              <UserCheck size={12} /> Portal
             </button>
           </div>
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
+      {/* ── Main Navbar ── */}
       <nav style={{
-        background: isScrolled 
-          ? (theme === 'dark' ? 'rgba(17, 24, 39, 0.95)' : 'rgba(255, 255, 255, 0.95)') 
-          : (theme === 'dark' ? '#111827' : '#ffffff'),
-        backdropFilter: 'blur(12px)',
-        boxShadow: isScrolled ? '0 4px 20px rgba(0,0,0,0.1)' : '0 2px 10px rgba(0,0,0,0.04)',
-        transition: 'all 0.3s ease',
-        borderBottom: '1px solid var(--border-light)'
+        background: scrolled
+          ? (theme === 'dark' ? 'rgba(4, 13, 26, 0.97)' : 'rgba(255,255,255,0.97)')
+          : (theme === 'dark' ? 'var(--navy-900)' : '#ffffff'),
+        backdropFilter: 'blur(16px)',
+        boxShadow: scrolled ? '0 4px 30px rgba(0,0,0,0.12)' : '0 1px 0 var(--border)',
+        transition: 'var(--ease-normal)',
       }}>
-        <div className="container-custom" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1.25rem' }}>
-          
-          {/* School Brand / Logo */}
-          <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '70px' }}>
+
+          {/* Logo */}
+          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
             <div style={{
-              width: '46px',
-              height: '46px',
-              background: 'linear-gradient(135deg, #0b192c 0%, #1d4ed8 100%)',
-              borderRadius: '12px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#f59e0b',
-              boxShadow: '0 4px 12px rgba(29, 78, 216, 0.25)',
-              position: 'relative'
+              width: '46px', height: '46px',
+              background: 'linear-gradient(135deg, var(--navy-800), var(--royal))',
+              borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: 'var(--shadow-royal)'
             }}>
-              <GraduationCap size={28} color="#f59e0b" />
+              <GraduationCap size={26} color="#f59e0b" />
             </div>
             <div>
-              <div style={{ fontSize: '1.25rem', fontWeight: '800', color: 'var(--text-dark)', lineHeight: '1.1', letterSpacing: '-0.02em' }}>
-                KRISHNA <span style={{ color: 'var(--royal-blue)' }}>INTERNATIONAL</span>
+              <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '800', fontSize: '1.15rem', color: 'var(--text-heading)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
+                KRISHNA <span style={{ color: 'var(--royal)' }}>INTL.</span>
               </div>
-              <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                School Aligarh • CBSE Affiliated #2132415
+              <div style={{ fontSize: '0.68rem', color: 'var(--text-muted)', fontWeight: '700', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                School Aligarh · CBSE #2132415
               </div>
             </div>
           </a>
 
-          {/* Desktop Nav Links */}
-          <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            <a href="#hero" style={navLinkStyle}>Home</a>
-            
-            <div style={{ position: 'relative' }} onMouseLeave={() => setActiveDropdown(null)}>
-              <button 
-                onClick={() => toggleDropdown('about')}
-                onMouseEnter={() => setActiveDropdown('about')}
-                style={dropdownBtnStyle}
-              >
-                About Us <ChevronDown size={14} />
-              </button>
-              {activeDropdown === 'about' && (
-                <div style={dropdownMenuStyle}>
-                  <a href="#about" style={dropdownItemStyle}><BookOpen size={14} color="#1d4ed8" /> Overview & History</a>
-                  <a href="#principal" style={dropdownItemStyle}><UserCheck size={14} color="#1d4ed8" /> Principal's Message</a>
-                  <a href="#vision" style={dropdownItemStyle}><Award size={14} color="#1d4ed8" /> Vision, Mission & Values</a>
-                </div>
-              )}
-            </div>
-
-            <div style={{ position: 'relative' }} onMouseLeave={() => setActiveDropdown(null)}>
-              <button 
-                onClick={() => toggleDropdown('academics')}
-                onMouseEnter={() => setActiveDropdown('academics')}
-                style={dropdownBtnStyle}
-              >
-                Academics <ChevronDown size={14} />
-              </button>
-              {activeDropdown === 'academics' && (
-                <div style={dropdownMenuStyle}>
-                  <a href="#academics" style={dropdownItemStyle}><GraduationCap size={14} color="#1d4ed8" /> CBSE Curriculum</a>
-                  <a href="#academics" style={dropdownItemStyle}><Sparkles size={14} color="#1d4ed8" /> STEM & AI Innovation Lab</a>
-                  <a href="#academics" style={dropdownItemStyle}><BookOpen size={14} color="#1d4ed8" /> Senior Secondary Streams</a>
-                </div>
-              )}
-            </div>
-
-            <a href="#facilities" style={navLinkStyle}>Facilities</a>
-
-            <div style={{ position: 'relative' }} onMouseLeave={() => setActiveDropdown(null)}>
-              <button 
-                onClick={() => toggleDropdown('admissions')}
-                onMouseEnter={() => setActiveDropdown('admissions')}
-                style={dropdownBtnStyle}
-              >
-                Admissions <ChevronDown size={14} />
-              </button>
-              {activeDropdown === 'admissions' && (
-                <div style={dropdownMenuStyle}>
-                  <a href="#admissions" style={dropdownItemStyle}><Award size={14} color="#1d4ed8" /> Admission Process</a>
-                  <button onClick={onOpenFeeCalculator} style={{ ...dropdownItemStyle, width: '100%', textAlign: 'left', background: 'none', border: 'none' }}>
-                    💰 Dynamic Fee Calculator
+          {/* Desktop Nav */}
+          <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
+            {navLinks.map(link => (
+              link.children ? (
+                <div key={link.label} style={{ position: 'relative' }}
+                  onMouseEnter={() => openDropdown(link.label)}
+                  onMouseLeave={scheduleClose}
+                >
+                  <button style={navBtnStyle}>
+                    {link.label} <ChevronDown size={13} style={{ transition: 'transform 0.2s', transform: activeDropdown === link.label ? 'rotate(180deg)' : 'none' }} />
                   </button>
-                  <button onClick={onOpenAdmissions} style={{ ...dropdownItemStyle, width: '100%', textAlign: 'left', background: 'none', border: 'none', color: '#1d4ed8', fontWeight: '700' }}>
-                    📝 Online Application Form
-                  </button>
+                  {activeDropdown === link.label && (
+                    <div style={dropdownStyle} onMouseEnter={() => clearTimeout(closeTimer.current)} onMouseLeave={scheduleClose}>
+                      {link.children.map(child => (
+                        child.action ? (
+                          <button key={child.label} onClick={() => handleChildAction(child.action)} style={{
+                            ...dropdownItemStyle,
+                            background: 'none', border: 'none', width: '100%', textAlign: 'left',
+                            color: child.highlight ? 'var(--royal)' : 'var(--text-body)',
+                            fontWeight: child.highlight ? '700' : '500',
+                          }}>
+                            {child.label}
+                          </button>
+                        ) : (
+                          <a key={child.label} href={child.href} onClick={() => setActiveDropdown(null)} style={dropdownItemStyle}>
+                            {child.label}
+                          </a>
+                        )
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-
-            <a href="#gallery" style={navLinkStyle}>Gallery</a>
-            <a href="#events" style={navLinkStyle}>Events & News</a>
-            <a href="#contact" style={navLinkStyle}>Contact Us</a>
+              ) : (
+                <a key={link.label} href={link.href} style={{ ...navBtnStyle, textDecoration: 'none' }}>
+                  {link.label}
+                </a>
+              )
+            ))}
           </div>
 
-          {/* Action CTAs */}
+          {/* Right Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <button 
-              onClick={onOpenSearch} 
-              style={{
-                background: 'var(--bg-subtle)',
-                border: '1px solid var(--border-light)',
-                color: 'var(--text-dark)',
-                width: '38px',
-                height: '38px',
-                borderRadius: '50%',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'var(--transition-fast)'
-              }}
-              title="Search website content"
-            >
-              <Search size={18} />
+            <button onClick={onOpenSearch} title="Search" style={{
+              width: '38px', height: '38px', borderRadius: '50%',
+              background: 'var(--bg-subtle)', border: '1px solid var(--border)',
+              color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', transition: 'var(--ease-fast)'
+            }}>
+              <Search size={17} />
             </button>
 
-            <button onClick={onOpenAdmissions} className="btn-gold hide-mobile">
+            <button onClick={onOpenAdmissions} className="btn btn-gold btn-md hide-mobile">
               Apply Now <ArrowRight size={16} />
             </button>
 
-            {/* Mobile Hamburger Button */}
-            <button 
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="show-mobile-only"
-              style={{
-                background: 'var(--bg-subtle)',
-                border: 'none',
-                padding: '0.5rem',
-                borderRadius: '8px',
-                color: 'var(--text-dark)',
-                cursor: 'pointer'
-              }}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {/* Mobile hamburger */}
+            <button onClick={() => setMobileOpen(p => !p)} className="show-mobile btn" style={{
+              background: 'var(--bg-subtle)', border: '1px solid var(--border)', padding: '0.5rem',
+              borderRadius: 'var(--r-md)', color: 'var(--text-heading)', width: '40px', height: '40px'
+            }}>
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="show-mobile-only" style={{
+        {/* Mobile Menu Drawer */}
+        {mobileOpen && (
+          <div className="show-mobile" style={{
+            borderTop: '1px solid var(--border)',
             background: 'var(--bg-card)',
-            borderTop: '1px solid var(--border-light)',
-            padding: '1.25rem',
+            padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: '1rem',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+            gap: '0.75rem',
+            boxShadow: 'var(--shadow-xl)'
           }}>
-            <a href="#hero" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Home</a>
-            <a href="#about" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>About KIS</a>
-            <a href="#academics" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Academics & STEM</a>
-            <a href="#facilities" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Campus Facilities</a>
-            <a href="#admissions" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Admissions</a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Media Gallery</a>
-            <a href="#events" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Events & Circulars</a>
-            <a href="#contact" onClick={() => setMobileMenuOpen(false)} style={mobileNavLinkStyle}>Contact Us</a>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
-              <button onClick={() => { setMobileMenuOpen(false); onOpenFeeCalculator(); }} className="btn-outline" style={{ padding: '0.5rem', fontSize: '0.85rem' }}>
+            {navLinks.map(link => (
+              <a key={link.label} href={link.href || '#'} onClick={() => setMobileOpen(false)} style={{
+                padding: '0.6rem 0', borderBottom: '1px solid var(--border)',
+                color: 'var(--text-heading)', fontWeight: '600', fontSize: '1rem'
+              }}>
+                {link.label}
+              </a>
+            ))}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', paddingTop: '0.5rem' }}>
+              <button onClick={() => { setMobileOpen(false); onOpenFeeCalculator(); }} className="btn btn-outline btn-md" style={{ padding: '0.65rem', fontSize: '0.85rem' }}>
                 Fee Calculator
               </button>
-              <button onClick={() => { setMobileMenuOpen(false); onOpenAdmissions(); }} className="btn-gold" style={{ padding: '0.5rem', fontSize: '0.85rem' }}>
-                Apply Online
+              <button onClick={() => { setMobileOpen(false); onOpenAdmissions(); }} className="btn btn-gold btn-md" style={{ padding: '0.65rem', fontSize: '0.85rem' }}>
+                Apply Now
               </button>
             </div>
           </div>
@@ -312,73 +247,34 @@ export default function Header({
   );
 }
 
-const fontBtnStyle = (active) => ({
-  background: active ? '#f59e0b' : 'transparent',
-  color: active ? '#0b192c' : '#ffffff',
-  border: 'none',
-  borderRadius: '3px',
-  padding: '0.1rem 0.35rem',
-  fontSize: '0.7rem',
-  fontWeight: '700',
-  cursor: 'pointer'
+const fontBtn = (active) => ({
+  background: active ? 'var(--gold)' : 'transparent',
+  color: active ? 'var(--navy-900)' : '#fff',
+  border: 'none', borderRadius: '4px',
+  padding: '2px 5px', fontSize: '0.7rem', fontWeight: '700', cursor: 'pointer'
 });
 
-const navLinkStyle = {
-  color: 'var(--text-dark)',
-  textDecoration: 'none',
-  fontWeight: '600',
-  fontSize: '0.925rem',
-  transition: 'color 0.2s ease',
-  cursor: 'pointer'
+const navBtnStyle = {
+  background: 'none', border: 'none',
+  color: 'var(--text-body)',
+  fontWeight: '600', fontSize: '0.88rem',
+  padding: '0.5rem 0.75rem', borderRadius: 'var(--r-sm)',
+  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem',
+  fontFamily: 'inherit', transition: 'var(--ease-fast)'
 };
 
-const mobileNavLinkStyle = {
-  color: 'var(--text-dark)',
-  textDecoration: 'none',
-  fontWeight: '600',
-  fontSize: '1rem',
-  padding: '0.4rem 0',
-  borderBottom: '1px solid var(--border-light)'
-};
-
-const dropdownBtnStyle = {
-  background: 'none',
-  border: 'none',
-  color: 'var(--text-dark)',
-  fontWeight: '600',
-  fontSize: '0.925rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.3rem',
-  cursor: 'pointer',
-  padding: '0.4rem 0'
-};
-
-const dropdownMenuStyle = {
-  position: 'absolute',
-  top: '100%',
-  left: 0,
-  width: '230px',
-  background: 'var(--bg-card)',
-  borderRadius: '12px',
-  boxShadow: '0 10px 30px rgba(0,0,0,0.15)',
-  border: '1px solid var(--border-light)',
-  padding: '0.5rem',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '0.25rem',
-  zIndex: 100
+const dropdownStyle = {
+  position: 'absolute', top: 'calc(100% + 8px)', left: 0,
+  minWidth: '220px', background: 'var(--bg-card)',
+  border: '1px solid var(--border)', borderRadius: 'var(--r-md)',
+  boxShadow: 'var(--shadow-lg)', padding: '0.5rem',
+  display: 'flex', flexDirection: 'column', gap: '0.2rem', zIndex: 100,
+  animation: 'scaleIn 0.18s ease'
 };
 
 const dropdownItemStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.6rem',
-  padding: '0.6rem 0.8rem',
-  color: 'var(--text-dark)',
-  textDecoration: 'none',
-  fontSize: '0.875rem',
-  fontWeight: '500',
-  borderRadius: '6px',
-  transition: 'background 0.2s ease'
+  display: 'flex', alignItems: 'center', gap: '0.5rem',
+  padding: '0.65rem 0.9rem', borderRadius: 'var(--r-sm)',
+  color: 'var(--text-body)', fontSize: '0.875rem', fontWeight: '500',
+  transition: 'var(--ease-fast)', cursor: 'pointer'
 };

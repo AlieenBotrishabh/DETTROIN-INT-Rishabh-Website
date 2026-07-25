@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { ArrowUp } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import AboutSection from './components/AboutSection';
+import TestimonialsSection from './components/TestimonialsSection';
 import AcademicsSection from './components/AcademicsSection';
 import FacilitiesSection from './components/FacilitiesSection';
 import AdmissionsSection from './components/AdmissionsSection';
@@ -15,90 +17,112 @@ import PortalLoginModal from './components/PortalLoginModal';
 import SearchModal from './components/SearchModal';
 
 export default function App() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem('kis-theme') || 'light'; } catch { return 'light'; }
+  });
   const [fontScale, setFontScale] = useState(100);
-  
-  // Modals state
-  const [admissionsModalOpen, setAdmissionsModalOpen] = useState(false);
-  const [feeCalculatorModalOpen, setFeeCalculatorModalOpen] = useState(false);
-  const [portalLoginModalOpen, setPortalLoginModalOpen] = useState(false);
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Apply Theme & Accessibility Font Scale to Root Element
+  // Modal states
+  const [admissionsOpen, setAdmissionsOpen] = useState(false);
+  const [feeCalcOpen, setFeeCalcOpen] = useState(false);
+  const [portalOpen, setPortalOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Apply theme
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
+    try { localStorage.setItem('kis-theme', theme); } catch {}
   }, [theme]);
 
+  // Apply font scale
   useEffect(() => {
     document.documentElement.style.setProperty('--font-scale', `${fontScale}%`);
   }, [fontScale]);
 
+  // Scroll-to-top visibility
+  useEffect(() => {
+    const onScroll = () => setShowScrollTop(window.scrollY > 500);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  // Keyboard shortcut: Ctrl+K for search
+  useEffect(() => {
+    const handleKey = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+      if (e.key === 'Escape') {
+        setAdmissionsOpen(false);
+        setFeeCalcOpen(false);
+        setPortalOpen(false);
+        setSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, []);
+
   return (
-    <div className="app-container" style={{ minHeight: '100vh', background: 'var(--bg-main)', color: 'var(--text-dark)' }}>
-      
-      {/* Header & Sticky Navigation */}
-      <Header 
+    <div style={{ minHeight: '100vh', background: 'var(--bg-page)', color: 'var(--text-body)' }}>
+
+      <Header
         theme={theme}
         setTheme={setTheme}
         fontScale={fontScale}
         setFontScale={setFontScale}
-        onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-        onOpenFeeCalculator={() => setFeeCalculatorModalOpen(true)}
-        onOpenPortalLogin={() => setPortalLoginModalOpen(true)}
-        onOpenSearch={() => setSearchModalOpen(true)}
+        onOpenAdmissions={() => setAdmissionsOpen(true)}
+        onOpenFeeCalculator={() => setFeeCalcOpen(true)}
+        onOpenPortalLogin={() => setPortalOpen(true)}
+        onOpenSearch={() => setSearchOpen(true)}
       />
 
-      {/* Main Page Content */}
       <main>
-        <Hero 
-          onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-          onOpenFeeCalculator={() => setFeeCalculatorModalOpen(true)}
+        <Hero
+          onOpenAdmissions={() => setAdmissionsOpen(true)}
+          onOpenFeeCalculator={() => setFeeCalcOpen(true)}
         />
         <AboutSection />
-        <AcademicsSection 
-          onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-        />
+        <TestimonialsSection />
+        <AcademicsSection onOpenAdmissions={() => setAdmissionsOpen(true)} />
         <FacilitiesSection />
-        <AdmissionsSection 
-          onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-          onOpenFeeCalculator={() => setFeeCalculatorModalOpen(true)}
+        <AdmissionsSection
+          onOpenAdmissions={() => setAdmissionsOpen(true)}
+          onOpenFeeCalculator={() => setFeeCalcOpen(true)}
         />
         <GallerySection />
-        <EventsNewsSection 
-          onOpenPortalLogin={() => setPortalLoginModalOpen(true)}
-        />
+        <EventsNewsSection onOpenPortalLogin={() => setPortalOpen(true)} />
         <ContactSection />
       </main>
 
-      {/* Footer */}
-      <Footer 
-        onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-        onOpenFeeCalculator={() => setFeeCalculatorModalOpen(true)}
+      <Footer
+        onOpenAdmissions={() => setAdmissionsOpen(true)}
+        onOpenFeeCalculator={() => setFeeCalcOpen(true)}
       />
 
-      {/* Interactive Modals */}
-      <AdmissionsModal 
-        isOpen={admissionsModalOpen}
-        onClose={() => setAdmissionsModalOpen(false)}
+      {/* Modals */}
+      <AdmissionsModal isOpen={admissionsOpen} onClose={() => setAdmissionsOpen(false)} />
+      <FeeCalculatorModal isOpen={feeCalcOpen} onClose={() => setFeeCalcOpen(false)} />
+      <PortalLoginModal isOpen={portalOpen} onClose={() => setPortalOpen(false)} />
+      <SearchModal
+        isOpen={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onOpenAdmissions={() => setAdmissionsOpen(true)}
+        onOpenFeeCalculator={() => setFeeCalcOpen(true)}
       />
 
-      <FeeCalculatorModal 
-        isOpen={feeCalculatorModalOpen}
-        onClose={() => setFeeCalculatorModalOpen(false)}
-      />
-
-      <PortalLoginModal 
-        isOpen={portalLoginModalOpen}
-        onClose={() => setPortalLoginModalOpen(false)}
-      />
-
-      <SearchModal 
-        isOpen={searchModalOpen}
-        onClose={() => setSearchModalOpen(false)}
-        onOpenAdmissions={() => setAdmissionsModalOpen(true)}
-        onOpenFeeCalculator={() => setFeeCalculatorModalOpen(true)}
-      />
-
+      {/* Scroll-to-top button */}
+      {showScrollTop && (
+        <button
+          className="scroll-top-btn"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          title="Back to top"
+        >
+          <ArrowUp size={20} />
+        </button>
+      )}
     </div>
   );
 }

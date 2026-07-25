@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
-  GraduationCap, Phone, Mail, Search, Moon, Sun, Menu, X,
+  Phone, Mail, Search, Moon, Sun, Menu, X,
   ChevronDown, UserCheck, Type, ArrowRight, Sparkles, Bell
 } from 'lucide-react';
+import kisLogo from '../assets/kis-logo.png';
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -20,7 +21,7 @@ const navLinks = [
     children: [
       { label: 'Admission Process', href: '#admissions' },
       { label: 'Fee Calculator', action: 'fee' },
-      { label: '📝 Apply Online', action: 'apply', highlight: true },
+      { label: 'Apply Online', action: 'apply', highlight: true },
     ]
   },
   { label: 'Gallery', href: '#gallery' },
@@ -36,10 +37,10 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
   const closeTimer = useRef(null);
 
   const notices = [
-    '🎓 Admissions Open 2026-27 for Nursery to Grade XII — Register Now!',
-    '🏆 KIS Student wins Gold at State Robotics Olympiad 2026',
-    '📅 Periodic Assessment Test-1 Schedule Released — Check Notice Board',
-    '🚌 Revised AC Bus Routes for July 2026 — Download Circular PDF',
+    'Admissions Open 2026-27 for Nursery to Grade XII — Register Now!',
+    'KIS Student wins Gold at State Robotics Olympiad 2026',
+    'Periodic Assessment Test-1 Schedule Released — Check Notice Board',
+    'Revised AC Bus Routes for July 2026 — Download Circular PDF',
   ];
 
   useEffect(() => {
@@ -81,8 +82,8 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
-            <div className="hide-mobile" style={{ display: 'flex', gap: '1.25rem' }}>
+          <div className="hide-mobile" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: '1.25rem' }}>
               <a href="tel:+919837050000" style={{ color: '#cbd5e1', fontSize: '0.8rem', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                 <Phone size={12} color="var(--gold)" /> +91-9837050000
               </a>
@@ -99,7 +100,7 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
             </div>
 
             {/* Theme Toggle */}
-            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+            <button onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')} title="Toggle dark mode"
               style={{ background: 'rgba(255,255,255,0.1)', border: 'none', color: '#fff', width: '28px', height: '28px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {theme === 'light' ? <Moon size={13} color="#fbbf24" /> : <Sun size={13} color="#fbbf24" />}
             </button>
@@ -131,12 +132,11 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
           {/* Logo */}
           <a href="#" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
             <div style={{
-              width: '46px', height: '46px',
-              background: 'linear-gradient(135deg, var(--navy-800), var(--royal))',
+              width: '46px', height: '46px', flexShrink: 0,
               borderRadius: '14px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: 'var(--shadow-royal)'
+              overflow: 'hidden', boxShadow: 'var(--shadow-royal)'
             }}>
-              <GraduationCap size={26} color="#f59e0b" />
+              <img src={kisLogo} alt="Krishna International School logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </div>
             <div>
               <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: '800', fontSize: '1.15rem', color: 'var(--text-heading)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
@@ -191,7 +191,7 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
           {/* Right Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
             <button onClick={onOpenSearch} title="Search" style={{
-              width: '38px', height: '38px', borderRadius: '50%',
+              width: '40px', height: '40px', borderRadius: '50%',
               background: 'var(--bg-subtle)', border: '1px solid var(--border)',
               color: 'var(--text-muted)', display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer', transition: 'var(--ease-fast)'
@@ -239,6 +239,39 @@ export default function Header({ theme, setTheme, fontScale, setFontScale, onOpe
               <button onClick={() => { setMobileOpen(false); onOpenAdmissions(); }} className="btn btn-gold btn-md" style={{ padding: '0.65rem', fontSize: '0.85rem' }}>
                 Apply Now
               </button>
+            </div>
+
+            {/* Mobile-only utility row: font size, theme toggle, portal login */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              gap: '0.75rem', paddingTop: '1rem', marginTop: '0.25rem', borderTop: '1px solid var(--border)'
+            }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-muted)', marginRight: '0.25rem' }}>
+                  <Type size={13} style={{ verticalAlign: '-2px' }} />
+                </span>
+                <button onClick={() => setFontScale(p => Math.max(p - 10, 90))} className="btn btn-outline btn-sm" style={{ minWidth: '40px', minHeight: '40px', padding: 0 }}>A-</button>
+                <button onClick={() => setFontScale(100)} className={`btn btn-sm ${fontScale === 100 ? 'btn-primary' : 'btn-outline'}`} style={{ minWidth: '40px', minHeight: '40px', padding: 0 }}>A</button>
+                <button onClick={() => setFontScale(p => Math.min(p + 10, 120))} className="btn btn-outline btn-sm" style={{ minWidth: '40px', minHeight: '40px', padding: 0 }}>A+</button>
+              </div>
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button
+                  onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+                  title="Toggle dark mode"
+                  className="btn btn-outline btn-sm"
+                  style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%' }}
+                >
+                  {theme === 'light' ? <Moon size={16} /> : <Sun size={16} />}
+                </button>
+                <button
+                  onClick={() => { setMobileOpen(false); onOpenPortalLogin(); }}
+                  className="btn btn-outline btn-sm"
+                  style={{ minHeight: '40px' }}
+                >
+                  <UserCheck size={15} /> Portal
+                </button>
+              </div>
             </div>
           </div>
         )}

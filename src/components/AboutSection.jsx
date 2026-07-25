@@ -1,273 +1,163 @@
 import React, { useState } from 'react';
-import { 
-  Award, Target, Compass, Heart, ShieldCheck, CheckCircle2, 
-  Quote, ArrowRight, BookOpen, Users, Sparkles 
-} from 'lucide-react';
+import { Award, Target, Compass, Heart, ShieldCheck, CheckCircle2, Quote, BookOpen, Users, Sparkles, Cpu, Leaf } from 'lucide-react';
+
+const tabs = ['principal', 'vision', 'pillars'];
+const tabLabels = { principal: "Principal's Desk", vision: 'Vision & Mission', pillars: 'Core Pillars' };
+
+const pillars = [
+  { icon: BookOpen, color: 'var(--royal)', bg: 'var(--royal-muted)', label: 'Academic Brilliance', desc: 'Conceptual clarity, CBSE curriculum mastery, and Olympiad coaching.' },
+  { icon: Cpu, color: 'var(--teal)', bg: 'rgba(13,148,136,0.1)', label: 'Tech & Innovation', desc: 'AI coding labs, 3D printing hubs, and smart digital classrooms.' },
+  { icon: Heart, color: 'var(--crimson)', bg: 'rgba(225,29,72,0.1)', label: 'Character & Ethics', desc: 'Value education, community service, and leadership workshops.' },
+  { icon: Leaf, color: 'var(--emerald)', bg: 'rgba(16,185,129,0.1)', label: 'Holistic Wellness', desc: 'Sports, arts, yoga, and mental wellness programs for all grades.' },
+];
+
+const accreditations = [
+  { icon: ShieldCheck, label: 'CBSE Affiliated', sub: '#2132415', color: 'var(--royal)', bg: 'var(--royal-muted)' },
+  { icon: Award, label: 'ISO 9001:2015', sub: 'Certified Quality', color: 'var(--gold-dark)', bg: 'var(--gold-muted)' },
+  { icon: Sparkles, label: 'STEM Excellence', sub: 'AI & Robotics Hub', color: 'var(--teal)', bg: 'rgba(13,148,136,0.1)' },
+  { icon: Users, label: '1 : 20 Ratio', sub: 'Faculty to Student', color: 'var(--violet)', bg: 'rgba(124,58,237,0.1)' },
+];
 
 export default function AboutSection() {
-  const [activeTab, setActiveTab] = useState('principal');
+  const [tab, setTab] = useState('principal');
 
   return (
-    <section id="about" style={{ padding: '6rem 0', background: 'var(--bg-main)' }}>
-      <div className="container-custom">
-        
+    <section id="about" className="section-pad" style={{ background: 'var(--bg-page)' }}>
+      <div className="container">
+
         {/* Section Header */}
-        <div className="section-title-wrap">
-          <div className="section-subtitle">
-            <Sparkles size={16} color="#d97706" /> Welcome to Krishna International School
-          </div>
-          <h2 className="section-title">Fostering Excellence, Character & Future Readiness</h2>
+        <div className="section-header">
+          <div className="section-eyebrow"><Sparkles size={14} /> About Krishna International School</div>
+          <h2 className="section-title">25 Years of <span className="text-gradient">Educational Excellence</span></h2>
           <p className="section-desc">
-            Established with a commitment to academic brilliance, holistic wellness, and technological empowerment in Krishna Nagar, Aligarh.
+            Founded with a vision to transform education in Aligarh, KIS blends CBSE academics with innovation, sports, and strong values.
           </p>
+          <div className="divider" />
         </div>
 
-        {/* 2-Column Grid: Left (Story & Accreditations), Right (Interactive Leadership & Vision Tabs) */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'start' }}>
-          
-          {/* Left Column: Campus Overview & Badges */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '3rem', alignItems: 'start' }}>
+
+          {/* LEFT: Campus photo + accreditation badges */}
           <div>
-            <div style={{
-              position: 'relative',
-              borderRadius: '24px',
-              overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              marginBottom: '2rem'
-            }}>
-              <img 
-                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1000&q=80" 
-                alt="Krishna International School Campus" 
-                style={{ width: '100%', height: '340px', objectFit: 'cover', display: 'block' }}
+            <div style={{ position: 'relative', borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', marginBottom: '1.75rem' }}>
+              <img
+                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1000&q=80"
+                alt="KIS Aligarh Campus"
+                style={{ width: '100%', height: '340px', objectFit: 'cover' }}
               />
               <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '1.5rem',
-                background: 'linear-gradient(to top, rgba(11, 25, 44, 0.95), transparent)',
-                color: '#fff'
+                position: 'absolute', bottom: 0, left: 0, right: 0, padding: '2rem 1.5rem',
+                background: 'linear-gradient(to top, rgba(3,12,28,0.97), transparent)'
               }}>
-                <div style={{ fontSize: '0.85rem', color: '#f59e0b', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  A 5-Acres State-of-the-Art Smart Campus
-                </div>
-                <div style={{ fontSize: '1.2rem', fontWeight: '700' }}>
-                  Krishna Nagar, G.T. Road, Aligarh, Uttar Pradesh
-                </div>
+                <div className="badge badge-inverted" style={{ marginBottom: '0.4rem' }}>5-Acre Smart Campus</div>
+                <div style={{ fontSize: '1.1rem', fontWeight: '700', color: '#fff' }}>Krishna Nagar, G.T. Road, Aligarh, U.P.</div>
               </div>
             </div>
 
-            {/* Core Badges Grid */}
+            {/* Accreditation Badges */}
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-              <div style={badgeBoxStyle}>
-                <ShieldCheck size={28} color="#1d4ed8" />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>CBSE Affiliated</h4>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Affiliation #2132415</p>
+              {accreditations.map(({ icon: Icon, label, sub, color, bg }) => (
+                <div key={label} className="card" style={{ padding: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                  <div className="icon-wrap icon-wrap-md" style={{ background: bg }}>
+                    <Icon size={22} color={color} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--text-heading)' }}>{label}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{sub}</div>
+                  </div>
                 </div>
-              </div>
-
-              <div style={badgeBoxStyle}>
-                <Award size={28} color="#d97706" />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>ISO Certified</h4>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>ISO 9001:2015 Quality</p>
-                </div>
-              </div>
-
-              <div style={badgeBoxStyle}>
-                <Sparkles size={28} color="#0d9488" />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>STEM Excellence</h4>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Robotics & AI Hub</p>
-                </div>
-              </div>
-
-              <div style={badgeBoxStyle}>
-                <Users size={28} color="#e11d48" />
-                <div>
-                  <h4 style={{ fontSize: '0.95rem', color: 'var(--text-dark)' }}>1:20 Faculty Ratio</h4>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Personalized Mentorship</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Right Column: Tabbed Leadership & Philosophy */}
+          {/* RIGHT: Tabbed content */}
           <div>
-            {/* Tab Navigation */}
-            <div style={{
-              display: 'flex',
-              background: 'var(--bg-subtle)',
-              padding: '0.4rem',
-              borderRadius: '16px',
-              gap: '0.35rem',
-              marginBottom: '1.75rem',
-              border: '1px solid var(--border-light)'
-            }}>
-              <button 
-                onClick={() => setActiveTab('principal')} 
-                style={tabBtnStyle(activeTab === 'principal')}
-              >
-                Principal's Desk
-              </button>
-              <button 
-                onClick={() => setActiveTab('vision')} 
-                style={tabBtnStyle(activeTab === 'vision')}
-              >
-                Vision & Mission
-              </button>
-              <button 
-                onClick={() => setActiveTab('pillars')} 
-                style={tabBtnStyle(activeTab === 'pillars')}
-              >
-                Core Pillars
-              </button>
+            <div className="tabs-bar" style={{ marginBottom: '1.75rem' }}>
+              {tabs.map(t => (
+                <button key={t} className={`tab-btn ${tab === t ? 'active' : ''}`} onClick={() => setTab(t)}>
+                  {tabLabels[t]}
+                </button>
+              ))}
             </div>
 
-            {/* Tab Content 1: Principal's Desk */}
-            {activeTab === 'principal' && (
-              <div id="principal" className="glass-card" style={{ padding: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', marginBottom: '1.5rem' }}>
-                  <img 
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80" 
-                    alt="Principal Krishna International School" 
-                    style={{ width: '70px', height: '70px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--royal-blue)' }}
+            {/* Principal Tab */}
+            {tab === 'principal' && (
+              <div id="principal" className="card animate-fade-up" style={{ padding: '2rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                  <img
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
+                    alt="Principal"
+                    style={{ width: '68px', height: '68px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--royal)', flexShrink: 0 }}
                   />
                   <div>
-                    <h3 style={{ fontSize: '1.25rem', color: 'var(--text-dark)' }}>Dr. Sunita Sharma</h3>
-                    <p style={{ color: 'var(--royal-blue)', fontWeight: '600', fontSize: '0.875rem' }}>Principal, M.Sc, Ph.D in Pedagogy</p>
-                    <span className="badge-gold" style={{ marginTop: '0.25rem', fontSize: '0.75rem' }}>20+ Yrs Educator Leadership</span>
+                    <h3 style={{ fontSize: '1.2rem', color: 'var(--text-heading)' }}>Dr. Sunita Sharma</h3>
+                    <p style={{ color: 'var(--royal)', fontWeight: '600', fontSize: '0.82rem' }}>Principal — M.Sc, Ph.D in Pedagogy</p>
+                    <span className="badge badge-gold" style={{ marginTop: '0.3rem' }}>20+ Years Educational Leadership</span>
                   </div>
                 </div>
 
-                <div style={{ position: 'relative', background: 'var(--bg-subtle)', padding: '1.25rem', borderRadius: '16px', borderLeft: '4px solid var(--royal-blue)' }}>
-                  <Quote size={24} color="var(--royal-blue)" style={{ opacity: 0.3, position: 'absolute', top: '10px', right: '10px' }} />
-                  <p style={{ color: 'var(--text-dark)', fontStyle: 'italic', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                    "At Krishna International School, education is not merely about learning facts, but training the mind to think critically, act ethically, and innovate courageously. We empower every child to uncover their unique potential in a compassionate, technology-enabled environment."
+                <div style={{ background: 'var(--bg-subtle)', padding: '1.25rem', borderRadius: 'var(--r-md)', borderLeft: '4px solid var(--royal)', position: 'relative', marginBottom: '1.25rem' }}>
+                  <Quote size={20} color="var(--royal)" style={{ opacity: 0.2, position: 'absolute', top: 8, right: 8 }} />
+                  <p style={{ color: 'var(--text-body)', fontStyle: 'italic', fontSize: '0.93rem', lineHeight: 1.7 }}>
+                    "At KIS, we believe education is not just about acquiring knowledge — it's about developing the courage to innovate, the empathy to lead, and the discipline to achieve. Every child who walks through our gates has unlimited potential."
                   </p>
                 </div>
 
-                <ul style={{ marginTop: '1.5rem', listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                  <li style={listItemStyle}><CheckCircle2 size={16} color="var(--accent-teal)" /> Experiential learning focused on real-world problem solving</li>
-                  <li style={listItemStyle}><CheckCircle2 size={16} color="var(--accent-teal)" /> Equal emphasis on competitive exam prep & sports mastery</li>
-                  <li style={listItemStyle}><CheckCircle2 size={16} color="var(--accent-teal)" /> Safe, inclusive campus with 24/7 CCTV surveillance</li>
-                </ul>
-              </div>
-            )}
-
-            {/* Tab Content 2: Vision & Mission */}
-            {activeTab === 'vision' && (
-              <div id="vision" className="glass-card" style={{ padding: '2rem' }}>
-                <div style={{ marginBottom: '1.75rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--royal-blue)', fontWeight: '700', marginBottom: '0.5rem' }}>
-                    <Target size={20} /> OUR VISION
-                  </div>
-                  <p style={{ color: 'var(--text-dark)', fontSize: '0.975rem', lineHeight: 1.6 }}>
-                    To be a globally recognized center of academic excellence that nurtures disciplined, creative, and empathetic future leaders who contribute meaningfully to society and global progress.
-                  </p>
-                </div>
-
-                <div style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--accent-gold-dark)', fontWeight: '700', marginBottom: '0.5rem' }}>
-                    <Compass size={20} /> OUR MISSION
-                  </div>
-                  <p style={{ color: 'var(--text-dark)', fontSize: '0.975rem', lineHeight: 1.6 }}>
-                    To deliver holistic, value-based education combining rigorous CBSE curriculum with cutting-edge STEM technology, sports academies, and character building initiatives in an enriching environment.
-                  </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  {[
+                    'Experiential, inquiry-based learning methodology',
+                    'Equal emphasis on academics, sports, and arts',
+                    '24/7 CCTV monitored, fully secure campus',
+                  ].map((item, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.875rem', color: 'var(--text-body)', fontWeight: '500' }}>
+                      <CheckCircle2 size={16} color="var(--teal)" style={{ flexShrink: 0 }} /> {item}
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
 
-            {/* Tab Content 3: Core Pillars */}
-            {activeTab === 'pillars' && (
-              <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={pillarCardStyle}>
-                  <div style={pillarIconStyle('#1d4ed8')}><BookOpen size={20} color="#fff" /></div>
-                  <div>
-                    <h4 style={{ color: 'var(--text-dark)', fontSize: '1rem' }}>Academic Brilliance</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Conceptual clarity, CBSE curriculum, and Olympiad mentoring.</p>
+            {/* Vision Tab */}
+            {tab === 'vision' && (
+              <div id="vision" className="card animate-fade-up" style={{ padding: '2rem' }}>
+                <div style={{ marginBottom: '1.75rem', paddingBottom: '1.75rem', borderBottom: '1px solid var(--border)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--royal)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.6rem' }}>
+                    <Target size={16} /> Our Vision
                   </div>
+                  <p style={{ color: 'var(--text-body)', fontSize: '0.95rem', lineHeight: 1.75 }}>
+                    To be a globally recognized center of academic excellence, nurturing disciplined, creative, and empathetic future leaders who contribute meaningfully to society and global progress.
+                  </p>
                 </div>
-
-                <div style={pillarCardStyle}>
-                  <div style={pillarIconStyle('#d97706')}><Sparkles size={20} color="#fff" /></div>
-                  <div>
-                    <h4 style={{ color: 'var(--text-dark)', fontSize: '1rem' }}>Technology & Innovation</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>AI coding labs, 3D printing, and smart digital classrooms.</p>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--gold-dark)', fontWeight: '800', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '0.6rem' }}>
+                    <Compass size={16} /> Our Mission
                   </div>
-                </div>
-
-                <div style={pillarCardStyle}>
-                  <div style={pillarIconStyle('#0d9488')}><Heart size={20} color="#fff" /></div>
-                  <div>
-                    <h4 style={{ color: 'var(--text-dark)', fontSize: '1rem' }}>Character & Ethics</h4>
-                    <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Value education, community service, and leadership workshops.</p>
-                  </div>
+                  <p style={{ color: 'var(--text-body)', fontSize: '0.95rem', lineHeight: 1.75 }}>
+                    To deliver holistic, value-based education combining rigorous CBSE curriculum with STEM innovation, sports academies, and character-building initiatives in a safe, enriching, and tech-enabled environment.
+                  </p>
                 </div>
               </div>
             )}
 
+            {/* Pillars Tab */}
+            {tab === 'pillars' && (
+              <div className="card animate-fade-up" style={{ padding: '1.75rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {pillars.map(({ icon: Icon, color, bg, label, desc }) => (
+                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--bg-subtle)', borderRadius: 'var(--r-md)', border: '1px solid var(--border)', transition: 'var(--ease-normal)' }}>
+                    <div className="icon-wrap icon-wrap-md" style={{ background: bg, flexShrink: 0 }}>
+                      <Icon size={22} color={color} />
+                    </div>
+                    <div>
+                      <h4 style={{ fontSize: '0.95rem', color: 'var(--text-heading)', marginBottom: '0.2rem' }}>{label}</h4>
+                      <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-
         </div>
-
       </div>
     </section>
   );
 }
-
-const tabBtnStyle = (active) => ({
-  flex: 1,
-  padding: '0.65rem 0.5rem',
-  background: active ? 'var(--bg-card)' : 'transparent',
-  color: active ? 'var(--royal-blue)' : 'var(--text-muted)',
-  fontWeight: active ? '700' : '600',
-  fontSize: '0.875rem',
-  border: 'none',
-  borderRadius: '12px',
-  cursor: 'pointer',
-  boxShadow: active ? 'var(--shadow-sm)' : 'none',
-  transition: 'all 0.2s ease'
-});
-
-const badgeBoxStyle = {
-  background: 'var(--bg-card)',
-  border: '1px solid var(--border-light)',
-  borderRadius: '16px',
-  padding: '1rem',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.75rem',
-  boxShadow: 'var(--shadow-sm)'
-};
-
-const listItemStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '0.5rem',
-  color: 'var(--text-dark)',
-  fontSize: '0.875rem',
-  fontWeight: '500'
-};
-
-const pillarCardStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '1rem',
-  padding: '0.85rem 1rem',
-  background: 'var(--bg-subtle)',
-  borderRadius: '14px',
-  border: '1px solid var(--border-light)'
-};
-
-const pillarIconStyle = (color) => ({
-  width: '40px',
-  height: '40px',
-  borderRadius: '10px',
-  background: color,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexShrink: 0
-});

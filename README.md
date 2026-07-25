@@ -14,7 +14,7 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 - **GitHub Username**: [AlieenBotrishabh](https://github.com/AlieenBotrishabh)
 - **GitHub Repository**: [DETTROIN-INT-Rishabh-KrishnaInternationSchool](https://github.com/AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool)
 - **Selected Original Website**: [https://kisaligarh.com/](https://kisaligarh.com/)
-- **Live Demo Link**: [Deploy on Vercel](https://github.com/AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool)
+- **Live Demo Link**: [https://dettroin-int-rishabh-krishnainternationschool.vercel.app](https://dettroin-int-rishabh-krishnainternationschool.vercel.app)
 
 ---
 
@@ -22,7 +22,7 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 
 - **Frontend Core**: React 18, JSX, JavaScript ES6+
 - **Build Tool & Server**: Vite 6.0
-- **Deployment & SPA Routing**: Vercel SPA Configuration (`vercel.json` rewrites & cache control)
+- **Deployment & SPA Routing**: Vercel Production CLI & SPA Configuration (`vercel.json` rewrites & cache control)
 - **Styling & UI System**: Custom Vanilla CSS Design System with CSS Custom Properties, Playfair & Outfit Typography, Advanced Glassmorphism, Shimmer Animations, Spring Transitions & Responsive Utilities
 - **Icons & Visuals**: Lucide React Icon Pack
 - **Interactive FX**: Canvas Confetti (Celebration animation on admission submission)
@@ -48,7 +48,7 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
    - Interactive tabs for *Principal's Desk*, *Vision & Mission*, and *Core Pillars*.
    - CBSE Affiliation #2132415 and ISO 9001:2015 accreditation badges.
 
-4. **Student Success Stories & Board Results (NEW)**:
+4. **Student Success Stories & Board Results**:
    - Interactive Testimonials Carousel with student/parent quotes and ranks.
    - Subject-Wise Average Performance table with animated progress bars for CBSE Board Exams 2025.
 
@@ -92,9 +92,9 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 
 ---
 
-## 📜 Git Commit History Highlights (22 Commits)
+## 📜 Git Commit History Highlights
 
-The repository contains 22 granular, structured, and descriptive git commits reflecting sequential development progress:
+The repository contains structured, descriptive git commits reflecting sequential development progress:
 
 1. `Initial commit`
 2. `Initial project setup and Vite React configuration`
@@ -118,6 +118,8 @@ The repository contains 22 granular, structured, and descriptive git commits ref
 20. `Redesign: Rebuild Academics, Admissions modal, and Fee Calculator with premium CSS class system`
 21. `Redesign: Upgrade GallerySection with new CSS design tokens, smooth image zoom, and modal lightbox`
 22. `Redesign: Complete design system overhaul across Events, Contact, Footer, Search, and PortalLogin components`
+23. `Docs: Update README.md with Vercel SPA routing fix details, 22 commits log, and Testimonials feature documentation`
+24. `Deploy: Live production deployment to Vercel with verified custom domain URL`
 
 ---
 
@@ -142,10 +144,6 @@ npm run build
 
 ---
 
-## 🚀 Deployment Instructions (Vercel)
+## 🚀 Live Vercel Deployment Link
 
-1. Push code to GitHub repository `AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool`.
-2. Connect repository on [Vercel](https://vercel.com).
-3. Framework Preset: **Vite**.
-4. The included `vercel.json` ensures zero 404 errors on page reloads by redirecting SPA routes to `index.html`.
-5. Click **Deploy**.
+🔗 **[https://dettroin-int-rishabh-krishnainternationschool.vercel.app](https://dettroin-int-rishabh-krishnainternationschool.vercel.app)**

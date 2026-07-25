@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Play, Calculator, Compass, ChevronLeft, ChevronRight, Sparkles, Star, Users, BookOpen, Award, Shield } from 'lucide-react';
+import campusPhoto from '../assets/campus-building.jpg';
 
 const slides = [
   {
-    tag: '🏆 CBSE Aligarh Region\'s #1 School 2025-26',
+    tag: 'CBSE Aligarh Region\'s #1 School 2025-26',
     headline: ['Shaping Tomorrow\'s', 'World-Class Leaders'],
     sub: 'Experience academic brilliance, AI-powered STEM labs, Olympic-level sports, and character-driven education at Krishna International School — 25 years of excellence.',
-    img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1800&q=85',
+    img: campusPhoto,
     accent: 'var(--royal)',
     primaryCta: 'Apply for Admission',
     secondaryCta: 'Explore Academics',
   },
   {
-    tag: '🤖 Cutting-Edge STEM & AI Innovation Hub',
+    tag: 'Cutting-Edge STEM & AI Innovation Hub',
     headline: ['Future-Ready Tech &', 'Robotics Education'],
     sub: 'Python coding, 3D printing, IoT sensors, drone aviation labs, and Machine Learning fundamentals — preparing students for the careers of tomorrow.',
     img: 'https://images.unsplash.com/photo-1535378917042-10a22c95931a?auto=format&fit=crop&w=1800&q=85',
@@ -21,7 +22,7 @@ const slides = [
     secondaryCta: 'View Infrastructure',
   },
   {
-    tag: '⚽ Olympic-Grade Sports & Arts Programs',
+    tag: 'Olympic-Grade Sports & Arts Programs',
     headline: ['Holistic Development,', 'Beyond Textbooks'],
     sub: 'Semi-Olympic heated swimming pool, NIS-certified coaches, National-level chess, shooting, tennis, badminton — all on a lush 5-acre smart campus.',
     img: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&w=1800&q=85',
@@ -38,9 +39,14 @@ const stats = [
   { value: '25 Yrs', label: 'Educational Legacy', icon: Shield, color: 'var(--violet)' },
 ];
 
+const AUTOPLAY_MS = 7000;
+
 export default function Hero({ onOpenAdmissions, onOpenFeeCalculator }) {
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const touchStartX = useRef(null);
+  const touchDeltaX = useRef(0);
 
   const goTo = (idx) => {
     if (isTransitioning) return;
@@ -51,17 +57,57 @@ export default function Hero({ onOpenAdmissions, onOpenFeeCalculator }) {
     }, 300);
   };
 
+  const goNext = () => goTo((current + 1) % slides.length);
+  const goPrev = () => goTo(current === 0 ? slides.length - 1 : current - 1);
+
   useEffect(() => {
-    const timer = setInterval(() => {
-      goTo((current + 1) % slides.length);
-    }, 7000);
+    if (paused) return;
+    const timer = setInterval(goNext, AUTOPLAY_MS);
     return () => clearInterval(timer);
-  }, [current]);
+  }, [current, paused]);
+
+  // Keyboard navigation when hero is focused/hovered
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (!paused) return;
+      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'ArrowLeft') goPrev();
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [current, paused]);
+
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchDeltaX.current = 0;
+  };
+  const onTouchMove = (e) => {
+    if (touchStartX.current === null) return;
+    touchDeltaX.current = e.touches[0].clientX - touchStartX.current;
+  };
+  const onTouchEnd = () => {
+    if (Math.abs(touchDeltaX.current) > 50) {
+      if (touchDeltaX.current < 0) goNext();
+      else goPrev();
+    }
+    touchStartX.current = null;
+    touchDeltaX.current = 0;
+  };
 
   const slide = slides[current];
 
   return (
-    <section id="hero" style={{ position: 'relative', overflow: 'hidden' }}>
+    <section
+      id="hero"
+      style={{ position: 'relative', overflow: 'hidden' }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Background Image */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 0,
@@ -133,24 +179,52 @@ export default function Hero({ onOpenAdmissions, onOpenFeeCalculator }) {
 
           {/* Slide Controls */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button onClick={() => goTo(current === 0 ? slides.length - 1 : current - 1)} style={navDotBtn}>
+            <button onClick={goPrev} aria-label="Previous slide" style={navDotBtn}>
               <ChevronLeft size={18} />
             </button>
 
-            <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
               {slides.map((_, i) => (
-                <button key={i} onClick={() => goTo(i)} style={{
-                  width: i === current ? '32px' : '8px',
-                  height: '8px', borderRadius: '4px',
-                  background: i === current ? 'var(--gold)' : 'rgba(255,255,255,0.35)',
-                  border: 'none', cursor: 'pointer', transition: 'var(--ease-normal)'
-                }} />
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                  aria-current={i === current}
+                  style={{
+                    width: i === current ? '40px' : '18px',
+                    height: '18px', padding: 0,
+                    background: 'transparent', border: 'none', cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}
+                >
+                  <span style={{
+                    display: 'block', width: '100%', height: '8px', borderRadius: '4px',
+                    background: 'rgba(255,255,255,0.35)', overflow: 'hidden', position: 'relative',
+                    transition: 'var(--ease-normal)',
+                  }}>
+                    {i === current && (
+                      <span
+                        key={current}
+                        style={{
+                          position: 'absolute', inset: 0, background: 'var(--gold)',
+                          borderRadius: '4px', transformOrigin: 'left',
+                          animation: `heroProgress ${AUTOPLAY_MS}ms linear forwards`,
+                          animationPlayState: paused ? 'paused' : 'running',
+                        }}
+                      />
+                    )}
+                  </span>
+                </button>
               ))}
             </div>
 
-            <button onClick={() => goTo((current + 1) % slides.length)} style={navDotBtn}>
+            <button onClick={goNext} aria-label="Next slide" style={navDotBtn}>
               <ChevronRight size={18} />
             </button>
+
+            <span style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)', fontWeight: '600', marginLeft: '0.25rem' }}>
+              {paused ? 'Paused' : 'Auto-playing'}
+            </span>
           </div>
         </div>
       </div>
@@ -191,7 +265,8 @@ export default function Hero({ onOpenAdmissions, onOpenFeeCalculator }) {
 const navDotBtn = {
   background: 'rgba(255,255,255,0.12)',
   border: '1px solid rgba(255,255,255,0.25)',
-  color: '#fff', width: '36px', height: '36px', borderRadius: '50%',
+  color: '#fff', width: '40px', height: '40px', borderRadius: '50%',
   cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+  flexShrink: 0,
   transition: 'var(--ease-fast)'
 };

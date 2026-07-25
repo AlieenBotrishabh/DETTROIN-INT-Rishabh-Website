@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowUp } from 'lucide-react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import Reveal from './components/Reveal';
 import AboutSection from './components/AboutSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import AcademicsSection from './components/AcademicsSection';
@@ -84,17 +85,19 @@ export default function App() {
           onOpenAdmissions={() => setAdmissionsOpen(true)}
           onOpenFeeCalculator={() => setFeeCalcOpen(true)}
         />
-        <AboutSection />
-        <TestimonialsSection />
-        <AcademicsSection onOpenAdmissions={() => setAdmissionsOpen(true)} />
-        <FacilitiesSection />
-        <AdmissionsSection
-          onOpenAdmissions={() => setAdmissionsOpen(true)}
-          onOpenFeeCalculator={() => setFeeCalcOpen(true)}
-        />
-        <GallerySection />
-        <EventsNewsSection onOpenPortalLogin={() => setPortalOpen(true)} />
-        <ContactSection />
+        <Reveal><AboutSection /></Reveal>
+        <Reveal><TestimonialsSection /></Reveal>
+        <Reveal><AcademicsSection onOpenAdmissions={() => setAdmissionsOpen(true)} /></Reveal>
+        <Reveal><FacilitiesSection /></Reveal>
+        <Reveal>
+          <AdmissionsSection
+            onOpenAdmissions={() => setAdmissionsOpen(true)}
+            onOpenFeeCalculator={() => setFeeCalcOpen(true)}
+          />
+        </Reveal>
+        <Reveal><GallerySection /></Reveal>
+        <Reveal><EventsNewsSection onOpenPortalLogin={() => setPortalOpen(true)} /></Reveal>
+        <Reveal><ContactSection /></Reveal>
       </main>
 
       <Footer

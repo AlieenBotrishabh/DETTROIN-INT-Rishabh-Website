@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, Cpu, Sparkles, Download, CheckCircle, GraduationCap, BrainCircuit, Microscope, Atom, ArrowRight, Zap } from 'lucide-react';
+import prePrimaryImg from '../assets/pre-primary.jpg';
 
 const wings = [
   {
@@ -7,7 +8,7 @@ const wings = [
     icon: Sparkles, color: 'var(--crimson)', bg: 'rgba(225,29,72,0.1)',
     desc: 'Nurturing curiosity through Montessori play-way learning, phonics, sensory arts, and motor skill development in a vibrant, child-safe environment.',
     features: ['Montessori Activity Centers', 'Phonics & Early English', 'Sensory & Creative Arts', 'Air-Conditioned Classrooms'],
-    img: 'https://images.unsplash.com/photo-1587691592057-2e020764835e?auto=format&fit=crop&w=900&q=80',
+    img: prePrimaryImg,
   },
   {
     id: 'primary', label: 'Primary School', sublabel: 'Grades I – V (Ages 6-10)',

@@ -1,5 +1,6 @@
 import React from 'react';
-import { GraduationCap, Phone, Mail, MapPin, Heart, ShieldCheck, ExternalLink, ArrowUp } from 'lucide-react';
+import { Phone, Mail, MapPin, Heart, ShieldCheck, ExternalLink, ArrowUp } from 'lucide-react';
+import kisLogo from '../assets/kis-logo.png';
 
 export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
   const scrollToTop = () => {
@@ -27,11 +28,10 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginBottom: '1.25rem' }}>
               <div className="icon-wrap icon-wrap-md" style={{
-                background: 'var(--grad-royal)',
-                color: 'var(--gold)',
+                overflow: 'hidden',
                 boxShadow: 'var(--shadow-royal)'
               }}>
-                <GraduationCap size={26} />
+                <img src={kisLogo} alt="Krishna International School logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <div>
                 <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: '1.15rem', fontWeight: '800', color: '#ffffff' }}>
@@ -47,8 +47,8 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
               Empowering students through academic rigor, futuristic AI/Robotics STEM labs, Olympic sports, and character education in Krishna Nagar, Aligarh.
             </p>
 
-            <div className="badge badge-inverted">
-              <ShieldCheck size={14} /> CBSE Affiliated Senior Secondary Institution
+            <div className="badge badge-inverted" style={{ whiteSpace: 'normal', textAlign: 'left', lineHeight: 1.4, maxWidth: '100%' }}>
+              <ShieldCheck size={14} style={{ flexShrink: 0 }} /> CBSE Affiliated Senior Secondary Institution
             </div>
           </div>
 
@@ -77,21 +77,6 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
             </ul>
           </div>
 
-          {/* Col 4: Dettroin Internship Assessment Info */}
-          <div>
-            <h4 style={{ fontSize: '1.05rem', color: '#ffffff', marginBottom: '1.25rem' }}>Dettroin Internship Challenge</h4>
-            <div style={{ background: 'rgba(255,255,255,0.05)', padding: '1.25rem', borderRadius: 'var(--r-md)', border: '1px solid rgba(255,255,255,0.1)' }}>
-              <span className="badge badge-inverted" style={{ marginBottom: '0.4rem', fontSize: '0.7rem' }}>ROUND 1 SUBMISSION</span>
-              <p style={{ fontSize: '0.825rem', color: '#cbd5e1', marginTop: '0.4rem', lineHeight: 1.5 }}>
-                Redesign assessment created for Dettroin Full Stack Developer Internship Program.
-              </p>
-              <div style={{ marginTop: '0.85rem', fontSize: '0.775rem', color: '#94a3b8' }}>
-                Candidate: <strong>Rishabh Kumar</strong><br />
-                Selected School: <strong>Krishna International School</strong>
-              </div>
-            </div>
-          </div>
-
         </div>
 
         {/* Bottom Copyright & Back to Top */}
@@ -107,7 +92,7 @@ export default function Footer({ onOpenAdmissions, onOpenFeeCalculator }) {
           color: '#94a3b8'
         }}>
           <div>
-            © {new Date().getFullYear()} Krishna International School Aligarh. Redesigned with ❤️ for Dettroin Technical Challenge.
+            © {new Date().getFullYear()} Krishna International School Aligarh. All rights reserved.
           </div>
 
           <button 

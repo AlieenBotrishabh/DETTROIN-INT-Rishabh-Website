@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { X, UserCheck, ArrowRight, CheckCircle, Shield } from 'lucide-react';
+import { X, ArrowRight, CheckCircle, Shield } from 'lucide-react';
+import kisLogo from '../assets/kis-logo.png';
 
 export default function PortalLoginModal({ isOpen, onClose }) {
   const [role, setRole] = useState('student');
@@ -37,11 +38,12 @@ export default function PortalLoginModal({ isOpen, onClose }) {
             <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
               <div className="icon-wrap icon-wrap-lg" style={{
                 background: 'var(--grad-navy)',
-                color: 'var(--gold)',
                 margin: '0 auto 0.75rem auto',
-                boxShadow: 'var(--shadow-md)'
+                boxShadow: 'var(--shadow-md)',
+                overflow: 'hidden',
+                padding: '8px'
               }}>
-                <UserCheck size={28} />
+                <img src={kisLogo} alt="Krishna International School logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <h2 style={{ fontSize: '1.5rem', color: 'var(--text-heading)' }}>KIS Digital Campus Portal</h2>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Login to access LMS, Attendance, & Fee Statements</p>

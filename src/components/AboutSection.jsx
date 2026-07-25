@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Award, Target, Compass, Heart, ShieldCheck, CheckCircle2, Quote, BookOpen, Users, Sparkles, Cpu, Leaf } from 'lucide-react';
+import campusPhoto from '../assets/campus-building.jpg';
 
 const tabs = ['principal', 'vision', 'pillars'];
 const tabLabels = { principal: "Principal's Desk", vision: 'Vision & Mission', pillars: 'Core Pillars' };
@@ -41,8 +42,8 @@ export default function AboutSection() {
           <div>
             <div style={{ position: 'relative', borderRadius: 'var(--r-xl)', overflow: 'hidden', boxShadow: 'var(--shadow-xl)', marginBottom: '1.75rem' }}>
               <img
-                src="https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1000&q=80"
-                alt="KIS Aligarh Campus"
+                src={campusPhoto}
+                alt="Krishna International School Aligarh Campus"
                 style={{ width: '100%', height: '340px', objectFit: 'cover' }}
               />
               <div style={{
@@ -83,16 +84,16 @@ export default function AboutSection() {
             {/* Principal Tab */}
             {tab === 'principal' && (
               <div id="principal" className="card animate-fade-up" style={{ padding: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
                   <img
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=300&q=80"
                     alt="Principal"
                     style={{ width: '68px', height: '68px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--royal)', flexShrink: 0 }}
                   />
-                  <div>
+                  <div style={{ minWidth: 0 }}>
                     <h3 style={{ fontSize: '1.2rem', color: 'var(--text-heading)' }}>Dr. Sunita Sharma</h3>
                     <p style={{ color: 'var(--royal)', fontWeight: '600', fontSize: '0.82rem' }}>Principal — M.Sc, Ph.D in Pedagogy</p>
-                    <span className="badge badge-gold" style={{ marginTop: '0.3rem' }}>20+ Years Educational Leadership</span>
+                    <span className="badge badge-gold" style={{ marginTop: '0.3rem', whiteSpace: 'normal', textAlign: 'left', lineHeight: 1.4 }}>20+ Years Educational Leadership</span>
                   </div>
                 </div>
 

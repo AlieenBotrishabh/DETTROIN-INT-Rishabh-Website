@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Image, Maximize2, X, Play, Filter, Calendar } from 'lucide-react';
+import { Sparkles, Maximize2, X, Calendar, Image as ImageIcon, Video, Trophy } from 'lucide-react';
 
 const galleryItems = [
   {
@@ -63,18 +63,19 @@ export default function GallerySection() {
     : galleryItems.filter(item => item.category === activeCategory);
 
   return (
-    <section id="gallery" style={{ padding: '6rem 0', background: 'var(--bg-main)' }}>
-      <div className="container-custom">
+    <section id="gallery" className="section-pad" style={{ background: 'var(--bg-page)' }}>
+      <div className="container">
         
         {/* Section Header */}
-        <div className="section-title-wrap">
-          <div className="section-subtitle">
-            <Sparkles size={16} color="#d97706" /> Life at KIS Aligarh
+        <div className="section-header">
+          <div className="section-eyebrow">
+            <ImageIcon size={14} /> Life at KIS Aligarh
           </div>
-          <h2 className="section-title">Media Center & Campus Moments</h2>
+          <h2 className="section-title">Media Center & <span className="text-gradient">Campus Showcase</span></h2>
           <p className="section-desc">
             Capturing the vibrant energy, athletic triumphs, cultural galas, and academic milestones of our students.
           </p>
+          <div className="divider" />
         </div>
 
         {/* Category Filter Pills */}
@@ -89,18 +90,8 @@ export default function GallerySection() {
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              style={{
-                padding: '0.55rem 1.25rem',
-                borderRadius: '9999px',
-                border: activeCategory === cat ? 'none' : '1px solid var(--border-light)',
-                background: activeCategory === cat ? 'var(--royal-blue)' : 'var(--bg-card)',
-                color: activeCategory === cat ? '#ffffff' : 'var(--text-muted)',
-                fontWeight: '700',
-                fontSize: '0.875rem',
-                cursor: 'pointer',
-                boxShadow: activeCategory === cat ? 'var(--shadow-blue)' : 'none',
-                transition: 'all 0.2s ease'
-              }}
+              className={`btn btn-sm ${activeCategory === cat ? 'btn-primary' : 'btn-outline'}`}
+              style={{ borderRadius: 'var(--r-full)' }}
             >
               {cat}
             </button>
@@ -116,7 +107,7 @@ export default function GallerySection() {
           {filteredItems.map((item) => (
             <div 
               key={item.id} 
-              className="glass-card" 
+              className="card" 
               style={{ overflow: 'hidden', cursor: 'pointer' }}
               onClick={() => setLightboxImg(item)}
             >
@@ -125,41 +116,24 @@ export default function GallerySection() {
                   src={item.img} 
                   alt={item.title} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
+                  onMouseEnter={e => e.target.style.transform = 'scale(1.08)'}
+                  onMouseLeave={e => e.target.style.transform = 'scale(1)'}
                 />
-                <div style={{
-                  position: 'absolute',
-                  top: '12px',
-                  left: '12px',
-                  background: 'rgba(11, 25, 44, 0.8)',
-                  color: '#fbbf24',
-                  padding: '0.25rem 0.7rem',
-                  borderRadius: '9999px',
-                  fontSize: '0.75rem',
-                  fontWeight: '700'
-                }}>
-                  {item.category}
+                <div style={{ position: 'absolute', top: '12px', left: '12px' }}>
+                  <span className="badge badge-inverted">{item.category}</span>
                 </div>
 
                 <div style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'rgba(11, 25, 44, 0.4)',
+                  background: 'rgba(3, 12, 28, 0.4)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   opacity: 0,
                   transition: 'opacity 0.3s ease'
                 }} className="hover-overlay">
-                  <div style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: '#ffffff',
-                    color: 'var(--royal-blue)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
+                  <div className="icon-wrap icon-wrap-md" style={{ background: '#ffffff', color: 'var(--royal)' }}>
                     <Maximize2 size={20} />
                   </div>
                 </div>
@@ -167,9 +141,9 @@ export default function GallerySection() {
 
               <div style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: 'var(--text-muted)', fontSize: '0.75rem', marginBottom: '0.35rem' }}>
-                  <Calendar size={12} color="var(--royal-blue)" /> {item.date}
+                  <Calendar size={13} color="var(--royal)" /> {item.date}
                 </div>
-                <h3 style={{ fontSize: '1.1rem', color: 'var(--text-dark)', lineHeight: 1.35 }}>{item.title}</h3>
+                <h3 style={{ fontSize: '1.05rem', color: 'var(--text-heading)', lineHeight: 1.35 }}>{item.title}</h3>
               </div>
             </div>
           ))}
@@ -177,54 +151,27 @@ export default function GallerySection() {
 
         {/* Lightbox Modal */}
         {lightboxImg && (
-          <div style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(0,0,0,0.85)',
-            backdropFilter: 'blur(10px)',
-            zIndex: 2500,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem'
-          }}>
-            <div style={{
-              maxWidth: '850px',
+          <div className="modal-backdrop">
+            <div className="modal-panel" style={{
+              maxWidth: '820px',
               width: '100%',
-              background: 'var(--bg-card)',
-              borderRadius: '24px',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-lg)',
-              position: 'relative'
+              padding: 0
             }}>
               <button 
+                className="modal-close"
                 onClick={() => setLightboxImg(null)}
-                style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  background: 'rgba(0,0,0,0.6)',
-                  color: '#fff',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '36px',
-                  height: '36px',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  zIndex: 10
-                }}
+                style={{ zIndex: 10 }}
               >
-                <X size={20} />
+                <X size={18} />
               </button>
 
-              <img src={lightboxImg.img} alt={lightboxImg.title} style={{ width: '100%', maxHeight: '520px', objectFit: 'cover', display: 'block' }} />
+              <img src={lightboxImg.img} alt={lightboxImg.title} style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', display: 'block' }} />
 
               <div style={{ padding: '1.75rem' }}>
-                <span className="badge-gold" style={{ marginBottom: '0.5rem' }}>{lightboxImg.category} • {lightboxImg.date}</span>
-                <h3 style={{ fontSize: '1.4rem', color: 'var(--text-dark)', margin: '0.25rem 0 0.5rem 0' }}>{lightboxImg.title}</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}>{lightboxImg.caption}</p>
+                <span className="badge badge-gold" style={{ marginBottom: '0.5rem' }}>{lightboxImg.category} • {lightboxImg.date}</span>
+                <h3 style={{ fontSize: '1.4rem', color: 'var(--text-heading)', margin: '0.25rem 0 0.5rem 0' }}>{lightboxImg.title}</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.925rem' }}>{lightboxImg.caption}</p>
               </div>
             </div>
           </div>

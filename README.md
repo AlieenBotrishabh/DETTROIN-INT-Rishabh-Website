@@ -10,11 +10,11 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 
 - **Full Name**: Rishabh Kumar
 - **Intern ID**: DETTROIN-INT-Rishabh
-- **Email Address**: alieenbotrishabh@gmail.com
+- **Email Address**: rishabhk1324@gmail.com
 - **GitHub Username**: [AlieenBotrishabh](https://github.com/AlieenBotrishabh)
 - **GitHub Repository**: [DETTROIN-INT-Rishabh-KrishnaInternationSchool](https://github.com/AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool)
 - **Selected Original Website**: [https://kisaligarh.com/](https://kisaligarh.com/)
-- **Live Demo Link**: [https://dettroin-int-rishabh-krishnainternationschool.vercel.app](https://dettroin-int-rishabh-krishnainternationschool.vercel.app)
+- **Live Demo Link**: [https://website68-pink.vercel.app/](https://website68-pink.vercel.app/)
 
 ---
 
@@ -146,4 +146,4 @@ npm run build
 
 ## 🚀 Live Vercel Deployment Link
 
-🔗 **[https://dettroin-int-rishabh-krishnainternationschool.vercel.app](https://dettroin-int-rishabh-krishnainternationschool.vercel.app)**
+🔗 **[https://website68-pink.vercel.app/](https://website68-pink.vercel.app/)**

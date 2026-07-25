@@ -14,7 +14,7 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 - **GitHub Username**: [AlieenBotrishabh](https://github.com/AlieenBotrishabh)
 - **GitHub Repository**: [DETTROIN-INT-Rishabh-KrishnaInternationSchool](https://github.com/AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool)
 - **Selected Original Website**: [https://kisaligarh.com/](https://kisaligarh.com/)
-- **Live Demo Link**: [https://website68-pink.vercel.app/](https://website68-pink.vercel.app/)
+- **Live Demo Link**: [https://website68-jww06ww34-alieenbotrishabs-projects.vercel.app/](https://website68-jww06ww34-alieenbotrishabs-projects.vercel.app/)
 
 ---
 
@@ -120,6 +120,14 @@ The repository contains structured, descriptive git commits reflecting sequentia
 22. `Redesign: Complete design system overhaul across Events, Contact, Footer, Search, and PortalLogin components`
 23. `Docs: Update README.md with Vercel SPA routing fix details, 22 commits log, and Testimonials feature documentation`
 24. `Deploy: Live production deployment to Vercel with verified custom domain URL`
+25. `Update facilities section and project ignores`
+26. `Fix: Mobile header layout and real school logo`
+27. `Feature: Hero carousel upgrades and scroll-reveal animations`
+28. `Fix: Touch targets and table overflow in Testimonials/Events`
+29. `Feature: Real branding assets, favicon, and social preview`
+30. `Redesign: Premium header banners for Admission and Fee modals`
+31. `Redesign: Rebuild AdmissionsSection, fix broken stock images`
+32. `Docs: Update submission email and live demo link`
 
 ---
 

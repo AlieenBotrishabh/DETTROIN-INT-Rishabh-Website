@@ -14,7 +14,7 @@ This project is a modern, high-performance, accessible, and feature-rich redesig
 - **GitHub Username**: [AlieenBotrishabh](https://github.com/AlieenBotrishabh)
 - **GitHub Repository**: [DETTROIN-INT-Rishabh-KrishnaInternationSchool](https://github.com/AlieenBotrishabh/DETTROIN-INT-Rishabh-KrishnaInternationSchool)
 - **Selected Original Website**: [https://kisaligarh.com/](https://kisaligarh.com/)
-- **Live Demo Link**: [https://website68-jww06ww34-alieenbotrishabs-projects.vercel.app/](https://website68-jww06ww34-alieenbotrishabs-projects.vercel.app/)
+- **Live Demo Link**: (https://website68-pink.vercel.app/)
 
 ---
 

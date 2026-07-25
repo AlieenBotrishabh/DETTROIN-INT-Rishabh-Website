@@ -31,7 +31,7 @@ const testimonials = [
     role: 'Father of Grade VI Student',
     text: 'The transparency, infrastructure, and faculty quality at KIS Aligarh exceed every expectation. The live GPS bus tracking app gives parents real peace of mind. Highly recommend to all Aligarh families!',
     img: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80',
-    score: '⭐ 5/5',
+    score: '5.0 / 5',
     rank: 'Parent Testimonial',
   },
 ];
@@ -111,10 +111,10 @@ export default function TestimonialsSection() {
                   ))}
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
-                  <button onClick={prev} className="btn btn-outline btn-sm" style={{ width: '36px', height: '36px', padding: 0, borderRadius: '50%' }}>
+                  <button onClick={prev} aria-label="Previous testimonial" className="btn btn-outline btn-sm" style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%' }}>
                     <ChevronLeft size={16} />
                   </button>
-                  <button onClick={next} className="btn btn-primary btn-sm" style={{ width: '36px', height: '36px', padding: 0, borderRadius: '50%' }}>
+                  <button onClick={next} aria-label="Next testimonial" className="btn btn-primary btn-sm" style={{ width: '40px', height: '40px', padding: 0, borderRadius: '50%' }}>
                     <ChevronRight size={16} />
                   </button>
                 </div>
@@ -132,6 +132,7 @@ export default function TestimonialsSection() {
             </div>
 
             <div className="card" style={{ padding: '0', overflow: 'hidden' }}>
+              <div style={{ overflowX: 'auto' }}>
               <table className="data-table">
                 <thead>
                   <tr>
@@ -159,6 +160,7 @@ export default function TestimonialsSection() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.5rem' }}>

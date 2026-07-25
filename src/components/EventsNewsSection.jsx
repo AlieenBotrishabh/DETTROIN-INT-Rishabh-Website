@@ -133,8 +133,9 @@ export default function EventsNewsSection({ onOpenPortalLogin }) {
                   <button 
                     onClick={() => alert(`Downloading circular: ${n.pdfName}`)}
                     className="btn btn-outline btn-sm"
-                    style={{ padding: '0.45rem', borderRadius: 'var(--r-sm)' }}
+                    style={{ width: '40px', height: '40px', padding: 0, borderRadius: 'var(--r-sm)', flexShrink: 0 }}
                     title="Download Circular PDF"
+                    aria-label="Download Circular PDF"
                   >
                     <Download size={16} />
                   </button>
